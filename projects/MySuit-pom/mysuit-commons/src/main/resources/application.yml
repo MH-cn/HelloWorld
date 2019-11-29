@@ -1,0 +1,66 @@
+
+spring: 
+   profiles: 
+      active: extend,self,self1,self2
+   main:
+      allow-bean-definition-overriding: true
+   mvc: 
+      view: 
+         prefix: /html/   #页面默认前缀目录
+         suffix: .jsp   #响应页面默认后缀
+   datasource:    #数据源的配置
+      driverClassName: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://mysql.moshco.top:3306/mysuit
+      username: mysuit
+      password: mysuit12
+      tomcat:    #数据库连接池配置
+         max-wait: 10000
+         max-active: 300
+         test-on-borrow: true
+         initial-size: 20
+   devtools:
+      restart:
+         additional-paths: src/main/java,src/main/resources
+         exclude: static/**,public/**
+   redis:
+      database: 0
+      host: redis.moshco.top
+      password: 1234
+      jedis:
+         pool:
+            max-active: 8
+            max-wait: -1
+            max-idle: 8
+            min-idle: 0
+         timeout: 10000
+   spring: 
+      data: 
+         mongodb:
+            uri: mongodb://:mysuit:mysuit12@mongodb.moshco.top:27017/mysuit
+         
+mybatis:
+   config-location: classpath:mybatis_configuration.xml
+   mapper-locations: classpath:mappers/*Dao.xml,classpath:mappers1/*Dao.xml
+   type-aliases-package: top.moshco.mysuit.commons.entity
+
+eureka: 
+   client: 
+      serviceUrl: 
+         defaultZone: http://registry-center.mysuit.moshco.top:8010/eureka/
+
+
+
+     
+# 项目配置
+mysuit: 
+   appTitle: 我的套件
+   appDescription: 我的套件。
+   appKeywords: 我的套件
+   environmental: dev   #环境：dev-开发环境 test-测试环境 product-生产环境
+   web-protocol: http #协议
+   domain-name: mysuit.moshco.top #项目域名
+   encoding: utf-8 #编码格式
+
+   
+   

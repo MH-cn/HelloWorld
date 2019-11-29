@@ -1,0 +1,194 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>top.moshco.mysuit</groupId>
+		<artifactId>mysuit-pom</artifactId>
+		<version>v1.0</version>
+	</parent>
+	<groupId>top.moshco.mysuit.route</groupId>
+	<artifactId>mysuit-route</artifactId>
+	<packaging>jar</packaging>
+	<name>MySuit-route</name>
+	<description>我的套件 路由</description>
+
+	<dependencies>
+
+		<!-- 我的套件 公共项目 -->
+		<dependency>
+			<groupId>top.moshco.mysuit.commons</groupId>
+			<artifactId>mysuit-commons</artifactId>
+			<version>v1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.cloud</groupId> -->
+		<!-- <artifactId>spring-cloud-starter-netflix-zuul</artifactId> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- jsp库 -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- jstl库 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<!-- MyBatis库 -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<!-- MySQL的JDBC库 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- 数据源库 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.10</version>
+		</dependency>
+
+		<!-- redis库 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<!-- mongoDB库 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+
+		<!-- 名称 -->
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+
+			<!-- springboot的插件 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<mainClass>top.moshco.mysuit.route.RouteApplication</mainClass>
+					<layout>jar</layout>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+	<profiles>
+
+		<profile>
+
+			<id>deploy1</id>
+
+			<build>
+
+				<!-- 名称 -->
+				<finalName>${project.artifactId}</finalName>
+
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+					<resource>
+						<directory>src/main/java</directory>
+						<includes>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+						<includes>
+							<include>**/**</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/webapp</directory>
+						<targetPath>META-INF/resources</targetPath>
+						<includes>
+							<include>**/**</include>
+						</includes>
+					</resource>
+				</resources>
+
+				<testResources>
+					<testResource>
+						<directory>src/test/resources</directory>
+						<filtering>true</filtering>
+					</testResource>
+				</testResources>
+
+				<plugins>
+
+					<!-- springboot的插件 -->
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<version>1.4.2.RELEASE</version>
+						<!-- 2.1.4.RELEASE 1.4.2.RELEASE -->
+						<configuration>
+							<fork>true</fork>
+							<mainClass>top.moshco.mysuit.route.RouteApplication</mainClass>
+							<layout>jar</layout>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<configuration>
+							<encoding>utf-8</encoding>
+							<useDefaultDelimiters>true</useDefaultDelimiters>
+						</configuration>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+	</profiles>
+
+</project>

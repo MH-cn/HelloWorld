@@ -1,0 +1,29 @@
+
+spring: 
+   application: 
+      name: mysuit-route
+
+server: 
+   port: 80
+   servlet:
+      context-path: /
+
+zuul: 
+   host: 
+    connect-timeout-millis: 100000
+    socket-timeout-millis: 600000
+   routes: 
+      mysuit-business: 
+         path: /mysuit-business/**
+         serviceId: smysuit-business
+         stripPrefix: false
+   sensitive-headers: #authorization, set-cookie, cookie #容许传递
+   #add-host-header: true
+                 
+
+
+# 项目配置
+sdodct: 
+   appTitle: 我的套件 路由
+   
+

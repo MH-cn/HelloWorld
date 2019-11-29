@@ -1,0 +1,5281 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.moshco.mysuit.commons.dao.MySuitBaseDao">
+	
+	<!-- 添加帐号表 -->
+	<insert id="saveSysUser" parameterType="sysUser">
+		<![CDATA[
+		insert into sys_user(
+		id , user_name , user_name_1234 , password , dongles , true_name , 
+		email , mobile , enable , user_type , last_set_password_time , prior_login_time , 
+		last_login_time , total_login , create_time , remark , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{userName,jdbcType=VARCHAR} , #{userName1234,jdbcType=VARCHAR} , #{password,jdbcType=VARCHAR} , #{dongles,jdbcType=VARCHAR} , #{trueName,jdbcType=VARCHAR} , 
+		#{email,jdbcType=VARCHAR} , #{mobile,jdbcType=VARCHAR} , #{enable,jdbcType=VARCHAR} , #{userType,jdbcType=VARCHAR} , #{lastSetPasswordTime,jdbcType=TIMESTAMP} , #{priorLoginTime,jdbcType=TIMESTAMP} , 
+		#{lastLoginTime,jdbcType=TIMESTAMP} , #{totalLogin,jdbcType=INTEGER} , #{createTime,jdbcType=TIMESTAMP} , #{remark,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻帐号表 -->
+	<select id="findSysUser" resultMap="sysUserResultMap">
+		<![CDATA[
+		select * from sys_user where id = #{sysUserId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新帐号表 -->
+	<update id="updateSysUser" parameterType="sysUser">
+		<![CDATA[
+		update sys_user set 
+		user_name = #{userName,jdbcType=VARCHAR} , user_name_1234 = #{userName1234,jdbcType=VARCHAR} , password = #{password,jdbcType=VARCHAR} , 
+		dongles = #{dongles,jdbcType=VARCHAR} , true_name = #{trueName,jdbcType=VARCHAR} , email = #{email,jdbcType=VARCHAR} , 
+		mobile = #{mobile,jdbcType=VARCHAR} , enable = #{enable,jdbcType=VARCHAR} , user_type = #{userType,jdbcType=VARCHAR} , 
+		last_set_password_time = #{lastSetPasswordTime,jdbcType=TIMESTAMP} , prior_login_time = #{priorLoginTime,jdbcType=TIMESTAMP} , last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP} , 
+		total_login = #{totalLogin,jdbcType=INTEGER} , create_time = #{createTime,jdbcType=TIMESTAMP} , remark = #{remark,jdbcType=VARCHAR} , 
+		is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新帐号表 -->
+	<update id="updateSysUser2" parameterType="sysUser">
+		update sys_user
+		<set>
+		<if test="userName != null">
+			user_name = #{userName},
+		</if>
+		<if test="userName1234 != null">
+			user_name_1234 = #{userName1234},
+		</if>
+		<if test="password != null">
+			password = #{password},
+		</if>
+		<if test="dongles != null">
+			dongles = #{dongles},
+		</if>
+		<if test="trueName != null">
+			true_name = #{trueName},
+		</if>
+		<if test="email != null">
+			email = #{email},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile},
+		</if>
+		<if test="enable != null">
+			enable = #{enable},
+		</if>
+		<if test="userType != null">
+			user_type = #{userType},
+		</if>
+		<if test="lastSetPasswordTime != null">
+			last_set_password_time = #{lastSetPasswordTime},
+		</if>
+		<if test="priorLoginTime != null">
+			prior_login_time = #{priorLoginTime},
+		</if>
+		<if test="lastLoginTime != null">
+			last_login_time = #{lastLoginTime},
+		</if>
+		<if test="totalLogin != null">
+			total_login = #{totalLogin},
+		</if>
+		<if test="createTime != null">
+			create_time = #{createTime},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除帐号表 -->
+	<delete id="deleteSysUser" parameterType="sysUser">
+		<![CDATA[
+		delete from sys_user where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询帐号表 -->
+	<select id="querySysUser" parameterType="java.util.Map" resultMap="sysUserResultMap">
+		select * from sys_user
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="userName1234 != null">
+			and user_name_1234 like #{userName1234}
+		</if>
+		<if test="password != null">
+			and password like #{password}
+		</if>
+		<if test="dongles != null">
+			and dongles like #{dongles}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="enable != null">
+			and enable like #{enable}
+		</if>
+		<if test="userType != null">
+			and user_type like #{userType}
+		</if>
+		<if test="lastSetPasswordTime1 != null and lastSetPasswordTime2 != null">
+			and last_set_password_time between #{lastSetPasswordTime1} and #{lastSetPasswordTime2}
+		</if>
+		<if test="priorLoginTime1 != null and priorLoginTime2 != null">
+			and prior_login_time between #{priorLoginTime1} and #{priorLoginTime2}
+		</if>
+		<if test="lastLoginTime1 != null and lastLoginTime2 != null">
+			and last_login_time between #{lastLoginTime1} and #{lastLoginTime2}
+		</if>
+		<if test="totalLogin != null">
+			and total_login = #{totalLogin}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userName'">user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userName1234'">user_name_1234 ${orderParam.direction}</if>
+			<if test="orderParam.name == 'password'">password ${orderParam.direction}</if>
+			<if test="orderParam.name == 'dongles'">dongles ${orderParam.direction}</if>
+			<if test="orderParam.name == 'trueName'">true_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'email'">email ${orderParam.direction}</if>
+			<if test="orderParam.name == 'mobile'">mobile ${orderParam.direction}</if>
+			<if test="orderParam.name == 'enable'">enable ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userType'">user_type ${orderParam.direction}</if>
+			<if test="orderParam.name == 'lastSetPasswordTime'">last_set_password_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'priorLoginTime'">prior_login_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'lastLoginTime'">last_login_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'totalLogin'">total_login ${orderParam.direction}</if>
+			<if test="orderParam.name == 'createTime'">create_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻帐号表 -->
+	<select id="findSysUser2" parameterType="java.util.Map" resultMap="sysUserResultMap">
+		select * from sys_user
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="userName1234 != null">
+			and user_name_1234 like #{userName1234}
+		</if>
+		<if test="password != null">
+			and password like #{password}
+		</if>
+		<if test="dongles != null">
+			and dongles like #{dongles}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="enable != null">
+			and enable like #{enable}
+		</if>
+		<if test="userType != null">
+			and user_type like #{userType}
+		</if>
+		<if test="lastSetPasswordTime1 != null and lastSetPasswordTime2 != null">
+			and last_set_password_time between #{lastSetPasswordTime1} and #{lastSetPasswordTime2}
+		</if>
+		<if test="priorLoginTime1 != null and priorLoginTime2 != null">
+			and prior_login_time between #{priorLoginTime1} and #{priorLoginTime2}
+		</if>
+		<if test="lastLoginTime1 != null and lastLoginTime2 != null">
+			and last_login_time between #{lastLoginTime1} and #{lastLoginTime2}
+		</if>
+		<if test="totalLogin != null">
+			and total_login = #{totalLogin}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻帐号表 -->
+	<select id="findSysUser3" parameterType="java.util.Map" resultMap="sysUserResultMap">
+		select * from sys_user
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'userName'">
+			 user_name like #{paramValue}
+		</if>
+		<if test="paramName == 'userName1234'">
+			 user_name_1234 like #{paramValue}
+		</if>
+		<if test="paramName == 'password'">
+			 password like #{paramValue}
+		</if>
+		<if test="paramName == 'dongles'">
+			 dongles like #{paramValue}
+		</if>
+		<if test="paramName == 'trueName'">
+			 true_name like #{paramValue}
+		</if>
+		<if test="paramName == 'email'">
+			 email like #{paramValue}
+		</if>
+		<if test="paramName == 'mobile'">
+			 mobile like #{paramValue}
+		</if>
+		<if test="paramName == 'enable'">
+			 enable like #{paramValue}
+		</if>
+		<if test="paramName == 'userType'">
+			 user_type like #{paramValue}
+		</if>
+		<if test="paramName == 'lastSetPasswordTime'">
+			 last_set_password_time = #{paramValue}
+		</if>
+		<if test="paramName == 'priorLoginTime'">
+			 prior_login_time = #{paramValue}
+		</if>
+		<if test="paramName == 'lastLoginTime'">
+			 last_login_time = #{paramValue}
+		</if>
+		<if test="paramName == 'totalLogin'">
+			 total_login = #{paramValue}
+		</if>
+		<if test="paramName == 'createTime'">
+			 create_time = #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）帐号表 -->
+	<select id="queryPaginationSysUserCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_user
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="userName1234 != null">
+			and user_name_1234 like #{userName1234}
+		</if>
+		<if test="password != null">
+			and password like #{password}
+		</if>
+		<if test="dongles != null">
+			and dongles like #{dongles}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="enable != null">
+			and enable like #{enable}
+		</if>
+		<if test="userType != null">
+			and user_type like #{userType}
+		</if>
+		<if test="lastSetPasswordTime1 != null and lastSetPasswordTime2 != null">
+			and last_set_password_time between #{lastSetPasswordTime1} and #{lastSetPasswordTime2}
+		</if>
+		<if test="priorLoginTime1 != null and priorLoginTime2 != null">
+			and prior_login_time between #{priorLoginTime1} and #{priorLoginTime2}
+		</if>
+		<if test="lastLoginTime1 != null and lastLoginTime2 != null">
+			and last_login_time between #{lastLoginTime1} and #{lastLoginTime2}
+		</if>
+		<if test="totalLogin != null">
+			and total_login = #{totalLogin}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）帐号表 -->
+	<select id="queryPaginationSysUserList" parameterType="java.util.Map" resultMap="sysUserResultMap">
+		select *  from sys_user
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="userName1234 != null">
+			and user_name_1234 like #{userName1234}
+		</if>
+		<if test="password != null">
+			and password like #{password}
+		</if>
+		<if test="dongles != null">
+			and dongles like #{dongles}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="enable != null">
+			and enable like #{enable}
+		</if>
+		<if test="userType != null">
+			and user_type like #{userType}
+		</if>
+		<if test="lastSetPasswordTime1 != null and lastSetPasswordTime2 != null">
+			and last_set_password_time between #{lastSetPasswordTime1} and #{lastSetPasswordTime2}
+		</if>
+		<if test="priorLoginTime1 != null and priorLoginTime2 != null">
+			and prior_login_time between #{priorLoginTime1} and #{priorLoginTime2}
+		</if>
+		<if test="lastLoginTime1 != null and lastLoginTime2 != null">
+			and last_login_time between #{lastLoginTime1} and #{lastLoginTime2}
+		</if>
+		<if test="totalLogin != null">
+			and total_login = #{totalLogin}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userName'">user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userName1234'">user_name_1234 ${orderParam.direction}</if>
+			<if test="orderParam.name == 'password'">password ${orderParam.direction}</if>
+			<if test="orderParam.name == 'dongles'">dongles ${orderParam.direction}</if>
+			<if test="orderParam.name == 'trueName'">true_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'email'">email ${orderParam.direction}</if>
+			<if test="orderParam.name == 'mobile'">mobile ${orderParam.direction}</if>
+			<if test="orderParam.name == 'enable'">enable ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userType'">user_type ${orderParam.direction}</if>
+			<if test="orderParam.name == 'lastSetPasswordTime'">last_set_password_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'priorLoginTime'">prior_login_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'lastLoginTime'">last_login_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'totalLogin'">total_login ${orderParam.direction}</if>
+			<if test="orderParam.name == 'createTime'">create_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加用户和用户组之间关系表 -->
+	<insert id="saveSysUserUserGroup" parameterType="sysUserUserGroup">
+		<![CDATA[
+		insert into sys_user_user_group(
+		id , user_id , user_group_id , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{userId,jdbcType=VARCHAR} , #{userGroupId,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻用户和用户组之间关系表 -->
+	<select id="findSysUserUserGroup" resultMap="sysUserUserGroupResultMap">
+		<![CDATA[
+		select * from sys_user_user_group where id = #{sysUserUserGroupId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新用户和用户组之间关系表 -->
+	<update id="updateSysUserUserGroup" parameterType="sysUserUserGroup">
+		<![CDATA[
+		update sys_user_user_group set 
+		user_id = #{userId,jdbcType=VARCHAR} , user_group_id = #{userGroupId,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , 
+		invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新用户和用户组之间关系表 -->
+	<update id="updateSysUserUserGroup2" parameterType="sysUserUserGroup">
+		update sys_user_user_group
+		<set>
+		<if test="userId != null">
+			user_id = #{userId},
+		</if>
+		<if test="userGroupId != null">
+			user_group_id = #{userGroupId},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除用户和用户组之间关系表 -->
+	<delete id="deleteSysUserUserGroup" parameterType="sysUserUserGroup">
+		<![CDATA[
+		delete from sys_user_user_group where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询用户和用户组之间关系表 -->
+	<select id="querySysUserUserGroup" parameterType="java.util.Map" resultMap="sysUserUserGroupResultMap">
+		select * from sys_user_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userId'">user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userGroupId'">user_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻用户和用户组之间关系表 -->
+	<select id="findSysUserUserGroup2" parameterType="java.util.Map" resultMap="sysUserUserGroupResultMap">
+		select * from sys_user_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻用户和用户组之间关系表 -->
+	<select id="findSysUserUserGroup3" parameterType="java.util.Map" resultMap="sysUserUserGroupResultMap">
+		select * from sys_user_user_group
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'userId'">
+			 user_id like #{paramValue}
+		</if>
+		<if test="paramName == 'userGroupId'">
+			 user_group_id like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）用户和用户组之间关系表 -->
+	<select id="queryPaginationSysUserUserGroupCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_user_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）用户和用户组之间关系表 -->
+	<select id="queryPaginationSysUserUserGroupList" parameterType="java.util.Map" resultMap="sysUserUserGroupResultMap">
+		select *  from sys_user_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userId'">user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userGroupId'">user_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加用户组表 -->
+	<insert id="saveSysUserGroup" parameterType="sysUserGroup">
+		<![CDATA[
+		insert into sys_user_group(
+		id , title , corporation_id , corporation , remark , is_valid , 
+		invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{corporationId,jdbcType=VARCHAR} , #{corporation,jdbcType=VARCHAR} , #{remark,jdbcType=VARCHAR} , 1 , 
+		#{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻用户组表 -->
+	<select id="findSysUserGroup" resultMap="sysUserGroupResultMap">
+		<![CDATA[
+		select * from sys_user_group where id = #{sysUserGroupId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新用户组表 -->
+	<update id="updateSysUserGroup" parameterType="sysUserGroup">
+		<![CDATA[
+		update sys_user_group set 
+		title = #{title,jdbcType=VARCHAR} , corporation_id = #{corporationId,jdbcType=VARCHAR} , corporation = #{corporation,jdbcType=VARCHAR} , 
+		remark = #{remark,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新用户组表 -->
+	<update id="updateSysUserGroup2" parameterType="sysUserGroup">
+		update sys_user_group
+		<set>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="corporationId != null">
+			corporation_id = #{corporationId},
+		</if>
+		<if test="corporation != null">
+			corporation = #{corporation},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除用户组表 -->
+	<delete id="deleteSysUserGroup" parameterType="sysUserGroup">
+		<![CDATA[
+		delete from sys_user_group where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询用户组表 -->
+	<select id="querySysUserGroup" parameterType="java.util.Map" resultMap="sysUserGroupResultMap">
+		select * from sys_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="corporationId != null">
+			and corporation_id like #{corporationId}
+		</if>
+		<if test="corporation != null">
+			and corporation like #{corporation}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'corporationId'">corporation_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'corporation'">corporation ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻用户组表 -->
+	<select id="findSysUserGroup2" parameterType="java.util.Map" resultMap="sysUserGroupResultMap">
+		select * from sys_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="corporationId != null">
+			and corporation_id like #{corporationId}
+		</if>
+		<if test="corporation != null">
+			and corporation like #{corporation}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻用户组表 -->
+	<select id="findSysUserGroup3" parameterType="java.util.Map" resultMap="sysUserGroupResultMap">
+		select * from sys_user_group
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'corporationId'">
+			 corporation_id like #{paramValue}
+		</if>
+		<if test="paramName == 'corporation'">
+			 corporation like #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）用户组表 -->
+	<select id="queryPaginationSysUserGroupCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="corporationId != null">
+			and corporation_id like #{corporationId}
+		</if>
+		<if test="corporation != null">
+			and corporation like #{corporation}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）用户组表 -->
+	<select id="queryPaginationSysUserGroupList" parameterType="java.util.Map" resultMap="sysUserGroupResultMap">
+		select *  from sys_user_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="corporationId != null">
+			and corporation_id like #{corporationId}
+		</if>
+		<if test="corporation != null">
+			and corporation like #{corporation}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'corporationId'">corporation_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'corporation'">corporation ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加用户组和角色之间的关系表 -->
+	<insert id="saveSysUserGroupRole" parameterType="sysUserGroupRole">
+		<![CDATA[
+		insert into sys_user_group_role(
+		id , user_group_id , role_id , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{userGroupId,jdbcType=VARCHAR} , #{roleId,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻用户组和角色之间的关系表 -->
+	<select id="findSysUserGroupRole" resultMap="sysUserGroupRoleResultMap">
+		<![CDATA[
+		select * from sys_user_group_role where id = #{sysUserGroupRoleId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新用户组和角色之间的关系表 -->
+	<update id="updateSysUserGroupRole" parameterType="sysUserGroupRole">
+		<![CDATA[
+		update sys_user_group_role set 
+		user_group_id = #{userGroupId,jdbcType=VARCHAR} , role_id = #{roleId,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , 
+		invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新用户组和角色之间的关系表 -->
+	<update id="updateSysUserGroupRole2" parameterType="sysUserGroupRole">
+		update sys_user_group_role
+		<set>
+		<if test="userGroupId != null">
+			user_group_id = #{userGroupId},
+		</if>
+		<if test="roleId != null">
+			role_id = #{roleId},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除用户组和角色之间的关系表 -->
+	<delete id="deleteSysUserGroupRole" parameterType="sysUserGroupRole">
+		<![CDATA[
+		delete from sys_user_group_role where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询用户组和角色之间的关系表 -->
+	<select id="querySysUserGroupRole" parameterType="java.util.Map" resultMap="sysUserGroupRoleResultMap">
+		select * from sys_user_group_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userGroupId'">user_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'roleId'">role_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻用户组和角色之间的关系表 -->
+	<select id="findSysUserGroupRole2" parameterType="java.util.Map" resultMap="sysUserGroupRoleResultMap">
+		select * from sys_user_group_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻用户组和角色之间的关系表 -->
+	<select id="findSysUserGroupRole3" parameterType="java.util.Map" resultMap="sysUserGroupRoleResultMap">
+		select * from sys_user_group_role
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'userGroupId'">
+			 user_group_id like #{paramValue}
+		</if>
+		<if test="paramName == 'roleId'">
+			 role_id like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）用户组和角色之间的关系表 -->
+	<select id="queryPaginationSysUserGroupRoleCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_user_group_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）用户组和角色之间的关系表 -->
+	<select id="queryPaginationSysUserGroupRoleList" parameterType="java.util.Map" resultMap="sysUserGroupRoleResultMap">
+		select *  from sys_user_group_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userGroupId != null">
+			and user_group_id like #{userGroupId}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userGroupId'">user_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'roleId'">role_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加角色表 -->
+	<insert id="saveSysRole" parameterType="sysRole">
+		<![CDATA[
+		insert into sys_role(
+		id , sign_code , title , remark , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{signCode,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{remark,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻角色表 -->
+	<select id="findSysRole" resultMap="sysRoleResultMap">
+		<![CDATA[
+		select * from sys_role where id = #{sysRoleId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新角色表 -->
+	<update id="updateSysRole" parameterType="sysRole">
+		<![CDATA[
+		update sys_role set 
+		sign_code = #{signCode,jdbcType=VARCHAR} , title = #{title,jdbcType=VARCHAR} , remark = #{remark,jdbcType=VARCHAR} , 
+		is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新角色表 -->
+	<update id="updateSysRole2" parameterType="sysRole">
+		update sys_role
+		<set>
+		<if test="signCode != null">
+			sign_code = #{signCode},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除角色表 -->
+	<delete id="deleteSysRole" parameterType="sysRole">
+		<![CDATA[
+		delete from sys_role where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询角色表 -->
+	<select id="querySysRole" parameterType="java.util.Map" resultMap="sysRoleResultMap">
+		select * from sys_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="signCode != null">
+			and sign_code like #{signCode}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'signCode'">sign_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻角色表 -->
+	<select id="findSysRole2" parameterType="java.util.Map" resultMap="sysRoleResultMap">
+		select * from sys_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="signCode != null">
+			and sign_code like #{signCode}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻角色表 -->
+	<select id="findSysRole3" parameterType="java.util.Map" resultMap="sysRoleResultMap">
+		select * from sys_role
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'signCode'">
+			 sign_code like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）角色表 -->
+	<select id="queryPaginationSysRoleCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="signCode != null">
+			and sign_code like #{signCode}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）角色表 -->
+	<select id="queryPaginationSysRoleList" parameterType="java.util.Map" resultMap="sysRoleResultMap">
+		select *  from sys_role
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="signCode != null">
+			and sign_code like #{signCode}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'signCode'">sign_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加角色和权限之间的关系表 -->
+	<insert id="saveSysRoleAuthority" parameterType="sysRoleAuthority">
+		<![CDATA[
+		insert into sys_role_authority(
+		id , role_id , authority_id , authority_code , authority_group_id , is_valid , 
+		invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{roleId,jdbcType=VARCHAR} , #{authorityId,jdbcType=VARCHAR} , #{authorityCode,jdbcType=VARCHAR} , #{authorityGroupId,jdbcType=VARCHAR} , 1 , 
+		#{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻角色和权限之间的关系表 -->
+	<select id="findSysRoleAuthority" resultMap="sysRoleAuthorityResultMap">
+		<![CDATA[
+		select * from sys_role_authority where id = #{sysRoleAuthorityId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新角色和权限之间的关系表 -->
+	<update id="updateSysRoleAuthority" parameterType="sysRoleAuthority">
+		<![CDATA[
+		update sys_role_authority set 
+		role_id = #{roleId,jdbcType=VARCHAR} , authority_id = #{authorityId,jdbcType=VARCHAR} , authority_code = #{authorityCode,jdbcType=VARCHAR} , 
+		authority_group_id = #{authorityGroupId,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新角色和权限之间的关系表 -->
+	<update id="updateSysRoleAuthority2" parameterType="sysRoleAuthority">
+		update sys_role_authority
+		<set>
+		<if test="roleId != null">
+			role_id = #{roleId},
+		</if>
+		<if test="authorityId != null">
+			authority_id = #{authorityId},
+		</if>
+		<if test="authorityCode != null">
+			authority_code = #{authorityCode},
+		</if>
+		<if test="authorityGroupId != null">
+			authority_group_id = #{authorityGroupId},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除角色和权限之间的关系表 -->
+	<delete id="deleteSysRoleAuthority" parameterType="sysRoleAuthority">
+		<![CDATA[
+		delete from sys_role_authority where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询角色和权限之间的关系表 -->
+	<select id="querySysRoleAuthority" parameterType="java.util.Map" resultMap="sysRoleAuthorityResultMap">
+		select * from sys_role_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'roleId'">role_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityId'">authority_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityCode'">authority_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityGroupId'">authority_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻角色和权限之间的关系表 -->
+	<select id="findSysRoleAuthority2" parameterType="java.util.Map" resultMap="sysRoleAuthorityResultMap">
+		select * from sys_role_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻角色和权限之间的关系表 -->
+	<select id="findSysRoleAuthority3" parameterType="java.util.Map" resultMap="sysRoleAuthorityResultMap">
+		select * from sys_role_authority
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'roleId'">
+			 role_id like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityId'">
+			 authority_id like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityCode'">
+			 authority_code like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityGroupId'">
+			 authority_group_id like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）角色和权限之间的关系表 -->
+	<select id="queryPaginationSysRoleAuthorityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_role_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）角色和权限之间的关系表 -->
+	<select id="queryPaginationSysRoleAuthorityList" parameterType="java.util.Map" resultMap="sysRoleAuthorityResultMap">
+		select *  from sys_role_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="roleId != null">
+			and role_id like #{roleId}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'roleId'">role_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityId'">authority_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityCode'">authority_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityGroupId'">authority_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加系统权限组表 -->
+	<insert id="saveSysAuthorityGroup" parameterType="sysAuthorityGroup">
+		<![CDATA[
+		insert into sys_authority_group(
+		id , supper_id , supper_title , title , remark , is_valid , 
+		invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{supperId,jdbcType=VARCHAR} , #{supperTitle,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{remark,jdbcType=VARCHAR} , 1 , 
+		#{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻系统权限组表 -->
+	<select id="findSysAuthorityGroup" resultMap="sysAuthorityGroupResultMap">
+		<![CDATA[
+		select * from sys_authority_group where id = #{sysAuthorityGroupId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新系统权限组表 -->
+	<update id="updateSysAuthorityGroup" parameterType="sysAuthorityGroup">
+		<![CDATA[
+		update sys_authority_group set 
+		supper_id = #{supperId,jdbcType=VARCHAR} , supper_title = #{supperTitle,jdbcType=VARCHAR} , title = #{title,jdbcType=VARCHAR} , 
+		remark = #{remark,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新系统权限组表 -->
+	<update id="updateSysAuthorityGroup2" parameterType="sysAuthorityGroup">
+		update sys_authority_group
+		<set>
+		<if test="supperId != null">
+			supper_id = #{supperId},
+		</if>
+		<if test="supperTitle != null">
+			supper_title = #{supperTitle},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除系统权限组表 -->
+	<delete id="deleteSysAuthorityGroup" parameterType="sysAuthorityGroup">
+		<![CDATA[
+		delete from sys_authority_group where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询系统权限组表 -->
+	<select id="querySysAuthorityGroup" parameterType="java.util.Map" resultMap="sysAuthorityGroupResultMap">
+		select * from sys_authority_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="supperId != null">
+			and supper_id like #{supperId}
+		</if>
+		<if test="supperTitle != null">
+			and supper_title like #{supperTitle}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'supperId'">supper_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'supperTitle'">supper_title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻系统权限组表 -->
+	<select id="findSysAuthorityGroup2" parameterType="java.util.Map" resultMap="sysAuthorityGroupResultMap">
+		select * from sys_authority_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="supperId != null">
+			and supper_id like #{supperId}
+		</if>
+		<if test="supperTitle != null">
+			and supper_title like #{supperTitle}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻系统权限组表 -->
+	<select id="findSysAuthorityGroup3" parameterType="java.util.Map" resultMap="sysAuthorityGroupResultMap">
+		select * from sys_authority_group
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'supperId'">
+			 supper_id like #{paramValue}
+		</if>
+		<if test="paramName == 'supperTitle'">
+			 supper_title like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）系统权限组表 -->
+	<select id="queryPaginationSysAuthorityGroupCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_authority_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="supperId != null">
+			and supper_id like #{supperId}
+		</if>
+		<if test="supperTitle != null">
+			and supper_title like #{supperTitle}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）系统权限组表 -->
+	<select id="queryPaginationSysAuthorityGroupList" parameterType="java.util.Map" resultMap="sysAuthorityGroupResultMap">
+		select *  from sys_authority_group
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="supperId != null">
+			and supper_id like #{supperId}
+		</if>
+		<if test="supperTitle != null">
+			and supper_title like #{supperTitle}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'supperId'">supper_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'supperTitle'">supper_title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加系统权限表 -->
+	<insert id="saveSysAuthority" parameterType="sysAuthority">
+		<![CDATA[
+		insert into sys_authority(
+		id , title , code , authority_group_id , authority_group , entry_url , 
+		remark , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{code,jdbcType=VARCHAR} , #{authorityGroupId,jdbcType=VARCHAR} , #{authorityGroup,jdbcType=VARCHAR} , #{entryUrl,jdbcType=VARCHAR} , 
+		#{remark,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻系统权限表 -->
+	<select id="findSysAuthority" resultMap="sysAuthorityResultMap">
+		<![CDATA[
+		select * from sys_authority where id = #{sysAuthorityId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新系统权限表 -->
+	<update id="updateSysAuthority" parameterType="sysAuthority">
+		<![CDATA[
+		update sys_authority set 
+		title = #{title,jdbcType=VARCHAR} , code = #{code,jdbcType=VARCHAR} , authority_group_id = #{authorityGroupId,jdbcType=VARCHAR} , 
+		authority_group = #{authorityGroup,jdbcType=VARCHAR} , entry_url = #{entryUrl,jdbcType=VARCHAR} , remark = #{remark,jdbcType=VARCHAR} , 
+		is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新系统权限表 -->
+	<update id="updateSysAuthority2" parameterType="sysAuthority">
+		update sys_authority
+		<set>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="code != null">
+			code = #{code},
+		</if>
+		<if test="authorityGroupId != null">
+			authority_group_id = #{authorityGroupId},
+		</if>
+		<if test="authorityGroup != null">
+			authority_group = #{authorityGroup},
+		</if>
+		<if test="entryUrl != null">
+			entry_url = #{entryUrl},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除系统权限表 -->
+	<delete id="deleteSysAuthority" parameterType="sysAuthority">
+		<![CDATA[
+		delete from sys_authority where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询系统权限表 -->
+	<select id="querySysAuthority" parameterType="java.util.Map" resultMap="sysAuthorityResultMap">
+		select * from sys_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="authorityGroup != null">
+			and authority_group like #{authorityGroup}
+		</if>
+		<if test="entryUrl != null">
+			and entry_url like #{entryUrl}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityGroupId'">authority_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityGroup'">authority_group ${orderParam.direction}</if>
+			<if test="orderParam.name == 'entryUrl'">entry_url ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻系统权限表 -->
+	<select id="findSysAuthority2" parameterType="java.util.Map" resultMap="sysAuthorityResultMap">
+		select * from sys_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="authorityGroup != null">
+			and authority_group like #{authorityGroup}
+		</if>
+		<if test="entryUrl != null">
+			and entry_url like #{entryUrl}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻系统权限表 -->
+	<select id="findSysAuthority3" parameterType="java.util.Map" resultMap="sysAuthorityResultMap">
+		select * from sys_authority
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'code'">
+			 code like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityGroupId'">
+			 authority_group_id like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityGroup'">
+			 authority_group like #{paramValue}
+		</if>
+		<if test="paramName == 'entryUrl'">
+			 entry_url like #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）系统权限表 -->
+	<select id="queryPaginationSysAuthorityCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="authorityGroup != null">
+			and authority_group like #{authorityGroup}
+		</if>
+		<if test="entryUrl != null">
+			and entry_url like #{entryUrl}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）系统权限表 -->
+	<select id="queryPaginationSysAuthorityList" parameterType="java.util.Map" resultMap="sysAuthorityResultMap">
+		select *  from sys_authority
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="authorityGroupId != null">
+			and authority_group_id like #{authorityGroupId}
+		</if>
+		<if test="authorityGroup != null">
+			and authority_group like #{authorityGroup}
+		</if>
+		<if test="entryUrl != null">
+			and entry_url like #{entryUrl}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityGroupId'">authority_group_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityGroup'">authority_group ${orderParam.direction}</if>
+			<if test="orderParam.name == 'entryUrl'">entry_url ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加菜单项 -->
+	<insert id="saveSysMenuOption" parameterType="sysMenuOption">
+		<![CDATA[
+		insert into sys_menu_option(
+		id , code , inner_code , icon , title , super_id , 
+		super_title , depth , url , is_band_authority , authority_id , authority_code , 
+		authority , remark , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{code,jdbcType=VARCHAR} , #{innerCode,jdbcType=VARCHAR} , #{icon,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{superId,jdbcType=VARCHAR} , 
+		#{superTitle,jdbcType=VARCHAR} , #{depth,jdbcType=INTEGER} , #{url,jdbcType=VARCHAR} , #{isBandAuthority,jdbcType=VARCHAR} , #{authorityId,jdbcType=VARCHAR} , #{authorityCode,jdbcType=VARCHAR} , 
+		#{authority,jdbcType=VARCHAR} , #{remark,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻菜单项 -->
+	<select id="findSysMenuOption" resultMap="sysMenuOptionResultMap">
+		<![CDATA[
+		select * from sys_menu_option where id = #{sysMenuOptionId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新菜单项 -->
+	<update id="updateSysMenuOption" parameterType="sysMenuOption">
+		<![CDATA[
+		update sys_menu_option set 
+		code = #{code,jdbcType=VARCHAR} , inner_code = #{innerCode,jdbcType=VARCHAR} , icon = #{icon,jdbcType=VARCHAR} , 
+		title = #{title,jdbcType=VARCHAR} , super_id = #{superId,jdbcType=VARCHAR} , super_title = #{superTitle,jdbcType=VARCHAR} , 
+		depth = #{depth,jdbcType=INTEGER} , url = #{url,jdbcType=VARCHAR} , is_band_authority = #{isBandAuthority,jdbcType=VARCHAR} , 
+		authority_id = #{authorityId,jdbcType=VARCHAR} , authority_code = #{authorityCode,jdbcType=VARCHAR} , authority = #{authority,jdbcType=VARCHAR} , 
+		remark = #{remark,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新菜单项 -->
+	<update id="updateSysMenuOption2" parameterType="sysMenuOption">
+		update sys_menu_option
+		<set>
+		<if test="code != null">
+			code = #{code},
+		</if>
+		<if test="innerCode != null">
+			inner_code = #{innerCode},
+		</if>
+		<if test="icon != null">
+			icon = #{icon},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="superId != null">
+			super_id = #{superId},
+		</if>
+		<if test="superTitle != null">
+			super_title = #{superTitle},
+		</if>
+		<if test="depth != null">
+			depth = #{depth},
+		</if>
+		<if test="url != null">
+			url = #{url},
+		</if>
+		<if test="isBandAuthority != null">
+			is_band_authority = #{isBandAuthority},
+		</if>
+		<if test="authorityId != null">
+			authority_id = #{authorityId},
+		</if>
+		<if test="authorityCode != null">
+			authority_code = #{authorityCode},
+		</if>
+		<if test="authority != null">
+			authority = #{authority},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除菜单项 -->
+	<delete id="deleteSysMenuOption" parameterType="sysMenuOption">
+		<![CDATA[
+		delete from sys_menu_option where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询菜单项 -->
+	<select id="querySysMenuOption" parameterType="java.util.Map" resultMap="sysMenuOptionResultMap">
+		select * from sys_menu_option
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="innerCode != null">
+			and inner_code like #{innerCode}
+		</if>
+		<if test="icon != null">
+			and icon like #{icon}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superId != null">
+			and super_id like #{superId}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="depth != null">
+			and depth = #{depth}
+		</if>
+		<if test="url != null">
+			and url like #{url}
+		</if>
+		<if test="isBandAuthority != null">
+			and is_band_authority like #{isBandAuthority}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authority != null">
+			and authority like #{authority}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'innerCode'">inner_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'icon'">icon ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'superId'">super_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'superTitle'">super_title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'depth'">depth ${orderParam.direction}</if>
+			<if test="orderParam.name == 'url'">url ${orderParam.direction}</if>
+			<if test="orderParam.name == 'isBandAuthority'">is_band_authority ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityId'">authority_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityCode'">authority_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authority'">authority ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻菜单项 -->
+	<select id="findSysMenuOption2" parameterType="java.util.Map" resultMap="sysMenuOptionResultMap">
+		select * from sys_menu_option
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="innerCode != null">
+			and inner_code like #{innerCode}
+		</if>
+		<if test="icon != null">
+			and icon like #{icon}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superId != null">
+			and super_id like #{superId}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="depth != null">
+			and depth = #{depth}
+		</if>
+		<if test="url != null">
+			and url like #{url}
+		</if>
+		<if test="isBandAuthority != null">
+			and is_band_authority like #{isBandAuthority}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authority != null">
+			and authority like #{authority}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻菜单项 -->
+	<select id="findSysMenuOption3" parameterType="java.util.Map" resultMap="sysMenuOptionResultMap">
+		select * from sys_menu_option
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'code'">
+			 code like #{paramValue}
+		</if>
+		<if test="paramName == 'innerCode'">
+			 inner_code like #{paramValue}
+		</if>
+		<if test="paramName == 'icon'">
+			 icon like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'superId'">
+			 super_id like #{paramValue}
+		</if>
+		<if test="paramName == 'superTitle'">
+			 super_title like #{paramValue}
+		</if>
+		<if test="paramName == 'depth'">
+			 depth = #{paramValue}
+		</if>
+		<if test="paramName == 'url'">
+			 url like #{paramValue}
+		</if>
+		<if test="paramName == 'isBandAuthority'">
+			 is_band_authority like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityId'">
+			 authority_id like #{paramValue}
+		</if>
+		<if test="paramName == 'authorityCode'">
+			 authority_code like #{paramValue}
+		</if>
+		<if test="paramName == 'authority'">
+			 authority like #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）菜单项 -->
+	<select id="queryPaginationSysMenuOptionCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from sys_menu_option
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="innerCode != null">
+			and inner_code like #{innerCode}
+		</if>
+		<if test="icon != null">
+			and icon like #{icon}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superId != null">
+			and super_id like #{superId}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="depth != null">
+			and depth = #{depth}
+		</if>
+		<if test="url != null">
+			and url like #{url}
+		</if>
+		<if test="isBandAuthority != null">
+			and is_band_authority like #{isBandAuthority}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authority != null">
+			and authority like #{authority}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）菜单项 -->
+	<select id="queryPaginationSysMenuOptionList" parameterType="java.util.Map" resultMap="sysMenuOptionResultMap">
+		select *  from sys_menu_option
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="innerCode != null">
+			and inner_code like #{innerCode}
+		</if>
+		<if test="icon != null">
+			and icon like #{icon}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superId != null">
+			and super_id like #{superId}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="depth != null">
+			and depth = #{depth}
+		</if>
+		<if test="url != null">
+			and url like #{url}
+		</if>
+		<if test="isBandAuthority != null">
+			and is_band_authority like #{isBandAuthority}
+		</if>
+		<if test="authorityId != null">
+			and authority_id like #{authorityId}
+		</if>
+		<if test="authorityCode != null">
+			and authority_code like #{authorityCode}
+		</if>
+		<if test="authority != null">
+			and authority like #{authority}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'innerCode'">inner_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'icon'">icon ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'superId'">super_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'superTitle'">super_title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'depth'">depth ${orderParam.direction}</if>
+			<if test="orderParam.name == 'url'">url ${orderParam.direction}</if>
+			<if test="orderParam.name == 'isBandAuthority'">is_band_authority ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityId'">authority_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authorityCode'">authority_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'authority'">authority ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加常量数据字典 -->
+	<insert id="saveConstantDataDict" parameterType="constantDataDict">
+		<![CDATA[
+		insert into constant_data_dict(
+		id , item , title , value , extend_value , order_index , 
+		is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{item,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{value,jdbcType=VARCHAR} , #{extendValue,jdbcType=VARCHAR} , #{orderIndex,jdbcType=INTEGER} , 
+		1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻常量数据字典 -->
+	<select id="findConstantDataDict" resultMap="constantDataDictResultMap">
+		<![CDATA[
+		select * from constant_data_dict where id = #{constantDataDictId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新常量数据字典 -->
+	<update id="updateConstantDataDict" parameterType="constantDataDict">
+		<![CDATA[
+		update constant_data_dict set 
+		item = #{item,jdbcType=VARCHAR} , title = #{title,jdbcType=VARCHAR} , value = #{value,jdbcType=VARCHAR} , 
+		extend_value = #{extendValue,jdbcType=VARCHAR} , order_index = #{orderIndex,jdbcType=INTEGER} , is_valid = #{isValid,jdbcType=INTEGER} , 
+		invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新常量数据字典 -->
+	<update id="updateConstantDataDict2" parameterType="constantDataDict">
+		update constant_data_dict
+		<set>
+		<if test="item != null">
+			item = #{item},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="value != null">
+			value = #{value},
+		</if>
+		<if test="extendValue != null">
+			extend_value = #{extendValue},
+		</if>
+		<if test="orderIndex != null">
+			order_index = #{orderIndex},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除常量数据字典 -->
+	<delete id="deleteConstantDataDict" parameterType="constantDataDict">
+		<![CDATA[
+		delete from constant_data_dict where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询常量数据字典 -->
+	<select id="queryConstantDataDict" parameterType="java.util.Map" resultMap="constantDataDictResultMap">
+		select * from constant_data_dict
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="item != null">
+			and item like #{item}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="value != null">
+			and value like #{value}
+		</if>
+		<if test="extendValue != null">
+			and extend_value like #{extendValue}
+		</if>
+		<if test="orderIndex != null">
+			and order_index = #{orderIndex}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'item'">item ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'value'">value ${orderParam.direction}</if>
+			<if test="orderParam.name == 'extendValue'">extend_value ${orderParam.direction}</if>
+			<if test="orderParam.name == 'orderIndex'">order_index ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻常量数据字典 -->
+	<select id="findConstantDataDict2" parameterType="java.util.Map" resultMap="constantDataDictResultMap">
+		select * from constant_data_dict
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="item != null">
+			and item like #{item}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="value != null">
+			and value like #{value}
+		</if>
+		<if test="extendValue != null">
+			and extend_value like #{extendValue}
+		</if>
+		<if test="orderIndex != null">
+			and order_index = #{orderIndex}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻常量数据字典 -->
+	<select id="findConstantDataDict3" parameterType="java.util.Map" resultMap="constantDataDictResultMap">
+		select * from constant_data_dict
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'item'">
+			 item like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'value'">
+			 value like #{paramValue}
+		</if>
+		<if test="paramName == 'extendValue'">
+			 extend_value like #{paramValue}
+		</if>
+		<if test="paramName == 'orderIndex'">
+			 order_index = #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）常量数据字典 -->
+	<select id="queryPaginationConstantDataDictCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from constant_data_dict
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="item != null">
+			and item like #{item}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="value != null">
+			and value like #{value}
+		</if>
+		<if test="extendValue != null">
+			and extend_value like #{extendValue}
+		</if>
+		<if test="orderIndex != null">
+			and order_index = #{orderIndex}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）常量数据字典 -->
+	<select id="queryPaginationConstantDataDictList" parameterType="java.util.Map" resultMap="constantDataDictResultMap">
+		select *  from constant_data_dict
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="item != null">
+			and item like #{item}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="value != null">
+			and value like #{value}
+		</if>
+		<if test="extendValue != null">
+			and extend_value like #{extendValue}
+		</if>
+		<if test="orderIndex != null">
+			and order_index = #{orderIndex}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'item'">item ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'value'">value ${orderParam.direction}</if>
+			<if test="orderParam.name == 'extendValue'">extend_value ${orderParam.direction}</if>
+			<if test="orderParam.name == 'orderIndex'">order_index ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加地址区域 -->
+	<insert id="saveAddressRegion" parameterType="addressRegion">
+		<![CDATA[
+		insert into address_region(
+		id , parent_region , region_name , post_code , level , is_valid , 
+		invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{parentRegion,jdbcType=VARCHAR} , #{regionName,jdbcType=VARCHAR} , #{postCode,jdbcType=VARCHAR} , #{level,jdbcType=VARCHAR} , 1 , 
+		#{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻地址区域 -->
+	<select id="findAddressRegion" resultMap="addressRegionResultMap">
+		<![CDATA[
+		select * from address_region where id = #{addressRegionId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新地址区域 -->
+	<update id="updateAddressRegion" parameterType="addressRegion">
+		<![CDATA[
+		update address_region set 
+		parent_region = #{parentRegion,jdbcType=VARCHAR} , region_name = #{regionName,jdbcType=VARCHAR} , post_code = #{postCode,jdbcType=VARCHAR} , 
+		level = #{level,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新地址区域 -->
+	<update id="updateAddressRegion2" parameterType="addressRegion">
+		update address_region
+		<set>
+		<if test="parentRegion != null">
+			parent_region = #{parentRegion},
+		</if>
+		<if test="regionName != null">
+			region_name = #{regionName},
+		</if>
+		<if test="postCode != null">
+			post_code = #{postCode},
+		</if>
+		<if test="level != null">
+			level = #{level},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除地址区域 -->
+	<delete id="deleteAddressRegion" parameterType="addressRegion">
+		<![CDATA[
+		delete from address_region where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询地址区域 -->
+	<select id="queryAddressRegion" parameterType="java.util.Map" resultMap="addressRegionResultMap">
+		select * from address_region
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="parentRegion != null">
+			and parent_region like #{parentRegion}
+		</if>
+		<if test="regionName != null">
+			and region_name like #{regionName}
+		</if>
+		<if test="postCode != null">
+			and post_code like #{postCode}
+		</if>
+		<if test="level != null">
+			and level like #{level}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'parentRegion'">parent_region ${orderParam.direction}</if>
+			<if test="orderParam.name == 'regionName'">region_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'postCode'">post_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'level'">level ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻地址区域 -->
+	<select id="findAddressRegion2" parameterType="java.util.Map" resultMap="addressRegionResultMap">
+		select * from address_region
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="parentRegion != null">
+			and parent_region like #{parentRegion}
+		</if>
+		<if test="regionName != null">
+			and region_name like #{regionName}
+		</if>
+		<if test="postCode != null">
+			and post_code like #{postCode}
+		</if>
+		<if test="level != null">
+			and level like #{level}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻地址区域 -->
+	<select id="findAddressRegion3" parameterType="java.util.Map" resultMap="addressRegionResultMap">
+		select * from address_region
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'parentRegion'">
+			 parent_region like #{paramValue}
+		</if>
+		<if test="paramName == 'regionName'">
+			 region_name like #{paramValue}
+		</if>
+		<if test="paramName == 'postCode'">
+			 post_code like #{paramValue}
+		</if>
+		<if test="paramName == 'level'">
+			 level like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）地址区域 -->
+	<select id="queryPaginationAddressRegionCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from address_region
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="parentRegion != null">
+			and parent_region like #{parentRegion}
+		</if>
+		<if test="regionName != null">
+			and region_name like #{regionName}
+		</if>
+		<if test="postCode != null">
+			and post_code like #{postCode}
+		</if>
+		<if test="level != null">
+			and level like #{level}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）地址区域 -->
+	<select id="queryPaginationAddressRegionList" parameterType="java.util.Map" resultMap="addressRegionResultMap">
+		select *  from address_region
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="parentRegion != null">
+			and parent_region like #{parentRegion}
+		</if>
+		<if test="regionName != null">
+			and region_name like #{regionName}
+		</if>
+		<if test="postCode != null">
+			and post_code like #{postCode}
+		</if>
+		<if test="level != null">
+			and level like #{level}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'parentRegion'">parent_region ${orderParam.direction}</if>
+			<if test="orderParam.name == 'regionName'">region_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'postCode'">post_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'level'">level ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加验证码表 -->
+	<insert id="saveVerifyCode" parameterType="verifyCode">
+		<![CDATA[
+		insert into verify_code(
+		id , code , sort , email , mobile , client_id , 
+		session_id , user_id , true_name , action_place , begin_time , end_time , 
+		validate_length , is_verify , verify_time , create_time , remark , is_valid , 
+		invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{code,jdbcType=VARCHAR} , #{sort,jdbcType=VARCHAR} , #{email,jdbcType=VARCHAR} , #{mobile,jdbcType=VARCHAR} , #{clientId,jdbcType=VARCHAR} , 
+		#{sessionId,jdbcType=VARCHAR} , #{userId,jdbcType=VARCHAR} , #{trueName,jdbcType=VARCHAR} , #{actionPlace,jdbcType=VARCHAR} , #{beginTime,jdbcType=TIMESTAMP} , #{endTime,jdbcType=TIMESTAMP} , 
+		#{validateLength,jdbcType=INTEGER} , #{isVerify,jdbcType=VARCHAR} , #{verifyTime,jdbcType=TIMESTAMP} , #{createTime,jdbcType=TIMESTAMP} , #{remark,jdbcType=VARCHAR} , 1 , 
+		#{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻验证码表 -->
+	<select id="findVerifyCode" resultMap="verifyCodeResultMap">
+		<![CDATA[
+		select * from verify_code where id = #{verifyCodeId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新验证码表 -->
+	<update id="updateVerifyCode" parameterType="verifyCode">
+		<![CDATA[
+		update verify_code set 
+		code = #{code,jdbcType=VARCHAR} , sort = #{sort,jdbcType=VARCHAR} , email = #{email,jdbcType=VARCHAR} , 
+		mobile = #{mobile,jdbcType=VARCHAR} , client_id = #{clientId,jdbcType=VARCHAR} , session_id = #{sessionId,jdbcType=VARCHAR} , 
+		user_id = #{userId,jdbcType=VARCHAR} , true_name = #{trueName,jdbcType=VARCHAR} , action_place = #{actionPlace,jdbcType=VARCHAR} , 
+		begin_time = #{beginTime,jdbcType=TIMESTAMP} , end_time = #{endTime,jdbcType=TIMESTAMP} , validate_length = #{validateLength,jdbcType=INTEGER} , 
+		is_verify = #{isVerify,jdbcType=VARCHAR} , verify_time = #{verifyTime,jdbcType=TIMESTAMP} , create_time = #{createTime,jdbcType=TIMESTAMP} , 
+		remark = #{remark,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新验证码表 -->
+	<update id="updateVerifyCode2" parameterType="verifyCode">
+		update verify_code
+		<set>
+		<if test="code != null">
+			code = #{code},
+		</if>
+		<if test="sort != null">
+			sort = #{sort},
+		</if>
+		<if test="email != null">
+			email = #{email},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile},
+		</if>
+		<if test="clientId != null">
+			client_id = #{clientId},
+		</if>
+		<if test="sessionId != null">
+			session_id = #{sessionId},
+		</if>
+		<if test="userId != null">
+			user_id = #{userId},
+		</if>
+		<if test="trueName != null">
+			true_name = #{trueName},
+		</if>
+		<if test="actionPlace != null">
+			action_place = #{actionPlace},
+		</if>
+		<if test="beginTime != null">
+			begin_time = #{beginTime},
+		</if>
+		<if test="endTime != null">
+			end_time = #{endTime},
+		</if>
+		<if test="validateLength != null">
+			validate_length = #{validateLength},
+		</if>
+		<if test="isVerify != null">
+			is_verify = #{isVerify},
+		</if>
+		<if test="verifyTime != null">
+			verify_time = #{verifyTime},
+		</if>
+		<if test="createTime != null">
+			create_time = #{createTime},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除验证码表 -->
+	<delete id="deleteVerifyCode" parameterType="verifyCode">
+		<![CDATA[
+		delete from verify_code where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询验证码表 -->
+	<select id="queryVerifyCode" parameterType="java.util.Map" resultMap="verifyCodeResultMap">
+		select * from verify_code
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="sort != null">
+			and sort like #{sort}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="clientId != null">
+			and client_id like #{clientId}
+		</if>
+		<if test="sessionId != null">
+			and session_id like #{sessionId}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="actionPlace != null">
+			and action_place like #{actionPlace}
+		</if>
+		<if test="beginTime1 != null and beginTime2 != null">
+			and begin_time between #{beginTime1} and #{beginTime2}
+		</if>
+		<if test="endTime1 != null and endTime2 != null">
+			and end_time between #{endTime1} and #{endTime2}
+		</if>
+		<if test="validateLength != null">
+			and validate_length = #{validateLength}
+		</if>
+		<if test="isVerify != null">
+			and is_verify like #{isVerify}
+		</if>
+		<if test="verifyTime1 != null and verifyTime2 != null">
+			and verify_time between #{verifyTime1} and #{verifyTime2}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sort'">sort ${orderParam.direction}</if>
+			<if test="orderParam.name == 'email'">email ${orderParam.direction}</if>
+			<if test="orderParam.name == 'mobile'">mobile ${orderParam.direction}</if>
+			<if test="orderParam.name == 'clientId'">client_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sessionId'">session_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userId'">user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'trueName'">true_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'actionPlace'">action_place ${orderParam.direction}</if>
+			<if test="orderParam.name == 'beginTime'">begin_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'endTime'">end_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'validateLength'">validate_length ${orderParam.direction}</if>
+			<if test="orderParam.name == 'isVerify'">is_verify ${orderParam.direction}</if>
+			<if test="orderParam.name == 'verifyTime'">verify_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'createTime'">create_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻验证码表 -->
+	<select id="findVerifyCode2" parameterType="java.util.Map" resultMap="verifyCodeResultMap">
+		select * from verify_code
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="sort != null">
+			and sort like #{sort}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="clientId != null">
+			and client_id like #{clientId}
+		</if>
+		<if test="sessionId != null">
+			and session_id like #{sessionId}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="actionPlace != null">
+			and action_place like #{actionPlace}
+		</if>
+		<if test="beginTime1 != null and beginTime2 != null">
+			and begin_time between #{beginTime1} and #{beginTime2}
+		</if>
+		<if test="endTime1 != null and endTime2 != null">
+			and end_time between #{endTime1} and #{endTime2}
+		</if>
+		<if test="validateLength != null">
+			and validate_length = #{validateLength}
+		</if>
+		<if test="isVerify != null">
+			and is_verify like #{isVerify}
+		</if>
+		<if test="verifyTime1 != null and verifyTime2 != null">
+			and verify_time between #{verifyTime1} and #{verifyTime2}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻验证码表 -->
+	<select id="findVerifyCode3" parameterType="java.util.Map" resultMap="verifyCodeResultMap">
+		select * from verify_code
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'code'">
+			 code like #{paramValue}
+		</if>
+		<if test="paramName == 'sort'">
+			 sort like #{paramValue}
+		</if>
+		<if test="paramName == 'email'">
+			 email like #{paramValue}
+		</if>
+		<if test="paramName == 'mobile'">
+			 mobile like #{paramValue}
+		</if>
+		<if test="paramName == 'clientId'">
+			 client_id like #{paramValue}
+		</if>
+		<if test="paramName == 'sessionId'">
+			 session_id like #{paramValue}
+		</if>
+		<if test="paramName == 'userId'">
+			 user_id like #{paramValue}
+		</if>
+		<if test="paramName == 'trueName'">
+			 true_name like #{paramValue}
+		</if>
+		<if test="paramName == 'actionPlace'">
+			 action_place like #{paramValue}
+		</if>
+		<if test="paramName == 'beginTime'">
+			 begin_time = #{paramValue}
+		</if>
+		<if test="paramName == 'endTime'">
+			 end_time = #{paramValue}
+		</if>
+		<if test="paramName == 'validateLength'">
+			 validate_length = #{paramValue}
+		</if>
+		<if test="paramName == 'isVerify'">
+			 is_verify like #{paramValue}
+		</if>
+		<if test="paramName == 'verifyTime'">
+			 verify_time = #{paramValue}
+		</if>
+		<if test="paramName == 'createTime'">
+			 create_time = #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）验证码表 -->
+	<select id="queryPaginationVerifyCodeCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from verify_code
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="sort != null">
+			and sort like #{sort}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="clientId != null">
+			and client_id like #{clientId}
+		</if>
+		<if test="sessionId != null">
+			and session_id like #{sessionId}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="actionPlace != null">
+			and action_place like #{actionPlace}
+		</if>
+		<if test="beginTime1 != null and beginTime2 != null">
+			and begin_time between #{beginTime1} and #{beginTime2}
+		</if>
+		<if test="endTime1 != null and endTime2 != null">
+			and end_time between #{endTime1} and #{endTime2}
+		</if>
+		<if test="validateLength != null">
+			and validate_length = #{validateLength}
+		</if>
+		<if test="isVerify != null">
+			and is_verify like #{isVerify}
+		</if>
+		<if test="verifyTime1 != null and verifyTime2 != null">
+			and verify_time between #{verifyTime1} and #{verifyTime2}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）验证码表 -->
+	<select id="queryPaginationVerifyCodeList" parameterType="java.util.Map" resultMap="verifyCodeResultMap">
+		select *  from verify_code
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="sort != null">
+			and sort like #{sort}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="clientId != null">
+			and client_id like #{clientId}
+		</if>
+		<if test="sessionId != null">
+			and session_id like #{sessionId}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="actionPlace != null">
+			and action_place like #{actionPlace}
+		</if>
+		<if test="beginTime1 != null and beginTime2 != null">
+			and begin_time between #{beginTime1} and #{beginTime2}
+		</if>
+		<if test="endTime1 != null and endTime2 != null">
+			and end_time between #{endTime1} and #{endTime2}
+		</if>
+		<if test="validateLength != null">
+			and validate_length = #{validateLength}
+		</if>
+		<if test="isVerify != null">
+			and is_verify like #{isVerify}
+		</if>
+		<if test="verifyTime1 != null and verifyTime2 != null">
+			and verify_time between #{verifyTime1} and #{verifyTime2}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sort'">sort ${orderParam.direction}</if>
+			<if test="orderParam.name == 'email'">email ${orderParam.direction}</if>
+			<if test="orderParam.name == 'mobile'">mobile ${orderParam.direction}</if>
+			<if test="orderParam.name == 'clientId'">client_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sessionId'">session_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userId'">user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'trueName'">true_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'actionPlace'">action_place ${orderParam.direction}</if>
+			<if test="orderParam.name == 'beginTime'">begin_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'endTime'">end_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'validateLength'">validate_length ${orderParam.direction}</if>
+			<if test="orderParam.name == 'isVerify'">is_verify ${orderParam.direction}</if>
+			<if test="orderParam.name == 'verifyTime'">verify_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'createTime'">create_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加员工表 -->
+	<insert id="saveEmployee" parameterType="employee">
+		<![CDATA[
+		insert into employee(
+		id , user_id , user_name , true_name , birthday , sex , 
+		post , is_manage_post , department_id , department , email , mobile , 
+		address , head_photo , status , entry_time , education , id_card , 
+		origin , creator_user_id , creator_user_name , creator_employee_id , creator , create_time , 
+		remark , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{userId,jdbcType=VARCHAR} , #{userName,jdbcType=VARCHAR} , #{trueName,jdbcType=VARCHAR} , #{birthday,jdbcType=VARCHAR} , #{sex,jdbcType=VARCHAR} , 
+		#{post,jdbcType=VARCHAR} , #{isManagePost,jdbcType=VARCHAR} , #{departmentId,jdbcType=VARCHAR} , #{department,jdbcType=VARCHAR} , #{email,jdbcType=VARCHAR} , #{mobile,jdbcType=VARCHAR} , 
+		#{address,jdbcType=VARCHAR} , #{headPhoto,jdbcType=VARCHAR} , #{status,jdbcType=VARCHAR} , #{entryTime,jdbcType=TIMESTAMP} , #{education,jdbcType=VARCHAR} , #{idCard,jdbcType=VARCHAR} , 
+		#{origin,jdbcType=VARCHAR} , #{creatorUserId,jdbcType=VARCHAR} , #{creatorUserName,jdbcType=VARCHAR} , #{creatorEmployeeId,jdbcType=VARCHAR} , #{creator,jdbcType=VARCHAR} , #{createTime,jdbcType=TIMESTAMP} , 
+		#{remark,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻员工表 -->
+	<select id="findEmployee" resultMap="employeeResultMap">
+		<![CDATA[
+		select * from employee where id = #{employeeId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新员工表 -->
+	<update id="updateEmployee" parameterType="employee">
+		<![CDATA[
+		update employee set 
+		user_id = #{userId,jdbcType=VARCHAR} , user_name = #{userName,jdbcType=VARCHAR} , true_name = #{trueName,jdbcType=VARCHAR} , 
+		birthday = #{birthday,jdbcType=VARCHAR} , sex = #{sex,jdbcType=VARCHAR} , post = #{post,jdbcType=VARCHAR} , 
+		is_manage_post = #{isManagePost,jdbcType=VARCHAR} , department_id = #{departmentId,jdbcType=VARCHAR} , department = #{department,jdbcType=VARCHAR} , 
+		email = #{email,jdbcType=VARCHAR} , mobile = #{mobile,jdbcType=VARCHAR} , address = #{address,jdbcType=VARCHAR} , 
+		head_photo = #{headPhoto,jdbcType=VARCHAR} , status = #{status,jdbcType=VARCHAR} , entry_time = #{entryTime,jdbcType=TIMESTAMP} , 
+		education = #{education,jdbcType=VARCHAR} , id_card = #{idCard,jdbcType=VARCHAR} , origin = #{origin,jdbcType=VARCHAR} , 
+		creator_user_id = #{creatorUserId,jdbcType=VARCHAR} , creator_user_name = #{creatorUserName,jdbcType=VARCHAR} , creator_employee_id = #{creatorEmployeeId,jdbcType=VARCHAR} , 
+		creator = #{creator,jdbcType=VARCHAR} , create_time = #{createTime,jdbcType=TIMESTAMP} , remark = #{remark,jdbcType=VARCHAR} , 
+		is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新员工表 -->
+	<update id="updateEmployee2" parameterType="employee">
+		update employee
+		<set>
+		<if test="userId != null">
+			user_id = #{userId},
+		</if>
+		<if test="userName != null">
+			user_name = #{userName},
+		</if>
+		<if test="trueName != null">
+			true_name = #{trueName},
+		</if>
+		<if test="birthday != null">
+			birthday = #{birthday},
+		</if>
+		<if test="sex != null">
+			sex = #{sex},
+		</if>
+		<if test="post != null">
+			post = #{post},
+		</if>
+		<if test="isManagePost != null">
+			is_manage_post = #{isManagePost},
+		</if>
+		<if test="departmentId != null">
+			department_id = #{departmentId},
+		</if>
+		<if test="department != null">
+			department = #{department},
+		</if>
+		<if test="email != null">
+			email = #{email},
+		</if>
+		<if test="mobile != null">
+			mobile = #{mobile},
+		</if>
+		<if test="address != null">
+			address = #{address},
+		</if>
+		<if test="headPhoto != null">
+			head_photo = #{headPhoto},
+		</if>
+		<if test="status != null">
+			status = #{status},
+		</if>
+		<if test="entryTime != null">
+			entry_time = #{entryTime},
+		</if>
+		<if test="education != null">
+			education = #{education},
+		</if>
+		<if test="idCard != null">
+			id_card = #{idCard},
+		</if>
+		<if test="origin != null">
+			origin = #{origin},
+		</if>
+		<if test="creatorUserId != null">
+			creator_user_id = #{creatorUserId},
+		</if>
+		<if test="creatorUserName != null">
+			creator_user_name = #{creatorUserName},
+		</if>
+		<if test="creatorEmployeeId != null">
+			creator_employee_id = #{creatorEmployeeId},
+		</if>
+		<if test="creator != null">
+			creator = #{creator},
+		</if>
+		<if test="createTime != null">
+			create_time = #{createTime},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除员工表 -->
+	<delete id="deleteEmployee" parameterType="employee">
+		<![CDATA[
+		delete from employee where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询员工表 -->
+	<select id="queryEmployee" parameterType="java.util.Map" resultMap="employeeResultMap">
+		select * from employee
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="birthday != null">
+			and birthday like #{birthday}
+		</if>
+		<if test="sex != null">
+			and sex like #{sex}
+		</if>
+		<if test="post != null">
+			and post like #{post}
+		</if>
+		<if test="isManagePost != null">
+			and is_manage_post like #{isManagePost}
+		</if>
+		<if test="departmentId != null">
+			and department_id like #{departmentId}
+		</if>
+		<if test="department != null">
+			and department like #{department}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="address != null">
+			and address like #{address}
+		</if>
+		<if test="headPhoto != null">
+			and head_photo like #{headPhoto}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="entryTime1 != null and entryTime2 != null">
+			and entry_time between #{entryTime1} and #{entryTime2}
+		</if>
+		<if test="education != null">
+			and education like #{education}
+		</if>
+		<if test="idCard != null">
+			and id_card like #{idCard}
+		</if>
+		<if test="origin != null">
+			and origin like #{origin}
+		</if>
+		<if test="creatorUserId != null">
+			and creator_user_id like #{creatorUserId}
+		</if>
+		<if test="creatorUserName != null">
+			and creator_user_name like #{creatorUserName}
+		</if>
+		<if test="creatorEmployeeId != null">
+			and creator_employee_id like #{creatorEmployeeId}
+		</if>
+		<if test="creator != null">
+			and creator like #{creator}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userId'">user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userName'">user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'trueName'">true_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'birthday'">birthday ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sex'">sex ${orderParam.direction}</if>
+			<if test="orderParam.name == 'post'">post ${orderParam.direction}</if>
+			<if test="orderParam.name == 'isManagePost'">is_manage_post ${orderParam.direction}</if>
+			<if test="orderParam.name == 'departmentId'">department_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'department'">department ${orderParam.direction}</if>
+			<if test="orderParam.name == 'email'">email ${orderParam.direction}</if>
+			<if test="orderParam.name == 'mobile'">mobile ${orderParam.direction}</if>
+			<if test="orderParam.name == 'address'">address ${orderParam.direction}</if>
+			<if test="orderParam.name == 'headPhoto'">head_photo ${orderParam.direction}</if>
+			<if test="orderParam.name == 'status'">status ${orderParam.direction}</if>
+			<if test="orderParam.name == 'entryTime'">entry_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'education'">education ${orderParam.direction}</if>
+			<if test="orderParam.name == 'idCard'">id_card ${orderParam.direction}</if>
+			<if test="orderParam.name == 'origin'">origin ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creatorUserId'">creator_user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creatorUserName'">creator_user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creatorEmployeeId'">creator_employee_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creator'">creator ${orderParam.direction}</if>
+			<if test="orderParam.name == 'createTime'">create_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻员工表 -->
+	<select id="findEmployee2" parameterType="java.util.Map" resultMap="employeeResultMap">
+		select * from employee
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="birthday != null">
+			and birthday like #{birthday}
+		</if>
+		<if test="sex != null">
+			and sex like #{sex}
+		</if>
+		<if test="post != null">
+			and post like #{post}
+		</if>
+		<if test="isManagePost != null">
+			and is_manage_post like #{isManagePost}
+		</if>
+		<if test="departmentId != null">
+			and department_id like #{departmentId}
+		</if>
+		<if test="department != null">
+			and department like #{department}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="address != null">
+			and address like #{address}
+		</if>
+		<if test="headPhoto != null">
+			and head_photo like #{headPhoto}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="entryTime1 != null and entryTime2 != null">
+			and entry_time between #{entryTime1} and #{entryTime2}
+		</if>
+		<if test="education != null">
+			and education like #{education}
+		</if>
+		<if test="idCard != null">
+			and id_card like #{idCard}
+		</if>
+		<if test="origin != null">
+			and origin like #{origin}
+		</if>
+		<if test="creatorUserId != null">
+			and creator_user_id like #{creatorUserId}
+		</if>
+		<if test="creatorUserName != null">
+			and creator_user_name like #{creatorUserName}
+		</if>
+		<if test="creatorEmployeeId != null">
+			and creator_employee_id like #{creatorEmployeeId}
+		</if>
+		<if test="creator != null">
+			and creator like #{creator}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻员工表 -->
+	<select id="findEmployee3" parameterType="java.util.Map" resultMap="employeeResultMap">
+		select * from employee
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'userId'">
+			 user_id like #{paramValue}
+		</if>
+		<if test="paramName == 'userName'">
+			 user_name like #{paramValue}
+		</if>
+		<if test="paramName == 'trueName'">
+			 true_name like #{paramValue}
+		</if>
+		<if test="paramName == 'birthday'">
+			 birthday like #{paramValue}
+		</if>
+		<if test="paramName == 'sex'">
+			 sex like #{paramValue}
+		</if>
+		<if test="paramName == 'post'">
+			 post like #{paramValue}
+		</if>
+		<if test="paramName == 'isManagePost'">
+			 is_manage_post like #{paramValue}
+		</if>
+		<if test="paramName == 'departmentId'">
+			 department_id like #{paramValue}
+		</if>
+		<if test="paramName == 'department'">
+			 department like #{paramValue}
+		</if>
+		<if test="paramName == 'email'">
+			 email like #{paramValue}
+		</if>
+		<if test="paramName == 'mobile'">
+			 mobile like #{paramValue}
+		</if>
+		<if test="paramName == 'address'">
+			 address like #{paramValue}
+		</if>
+		<if test="paramName == 'headPhoto'">
+			 head_photo like #{paramValue}
+		</if>
+		<if test="paramName == 'status'">
+			 status like #{paramValue}
+		</if>
+		<if test="paramName == 'entryTime'">
+			 entry_time = #{paramValue}
+		</if>
+		<if test="paramName == 'education'">
+			 education like #{paramValue}
+		</if>
+		<if test="paramName == 'idCard'">
+			 id_card like #{paramValue}
+		</if>
+		<if test="paramName == 'origin'">
+			 origin like #{paramValue}
+		</if>
+		<if test="paramName == 'creatorUserId'">
+			 creator_user_id like #{paramValue}
+		</if>
+		<if test="paramName == 'creatorUserName'">
+			 creator_user_name like #{paramValue}
+		</if>
+		<if test="paramName == 'creatorEmployeeId'">
+			 creator_employee_id like #{paramValue}
+		</if>
+		<if test="paramName == 'creator'">
+			 creator like #{paramValue}
+		</if>
+		<if test="paramName == 'createTime'">
+			 create_time = #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）员工表 -->
+	<select id="queryPaginationEmployeeCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from employee
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="birthday != null">
+			and birthday like #{birthday}
+		</if>
+		<if test="sex != null">
+			and sex like #{sex}
+		</if>
+		<if test="post != null">
+			and post like #{post}
+		</if>
+		<if test="isManagePost != null">
+			and is_manage_post like #{isManagePost}
+		</if>
+		<if test="departmentId != null">
+			and department_id like #{departmentId}
+		</if>
+		<if test="department != null">
+			and department like #{department}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="address != null">
+			and address like #{address}
+		</if>
+		<if test="headPhoto != null">
+			and head_photo like #{headPhoto}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="entryTime1 != null and entryTime2 != null">
+			and entry_time between #{entryTime1} and #{entryTime2}
+		</if>
+		<if test="education != null">
+			and education like #{education}
+		</if>
+		<if test="idCard != null">
+			and id_card like #{idCard}
+		</if>
+		<if test="origin != null">
+			and origin like #{origin}
+		</if>
+		<if test="creatorUserId != null">
+			and creator_user_id like #{creatorUserId}
+		</if>
+		<if test="creatorUserName != null">
+			and creator_user_name like #{creatorUserName}
+		</if>
+		<if test="creatorEmployeeId != null">
+			and creator_employee_id like #{creatorEmployeeId}
+		</if>
+		<if test="creator != null">
+			and creator like #{creator}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）员工表 -->
+	<select id="queryPaginationEmployeeList" parameterType="java.util.Map" resultMap="employeeResultMap">
+		select *  from employee
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="userId != null">
+			and user_id like #{userId}
+		</if>
+		<if test="userName != null">
+			and user_name like #{userName}
+		</if>
+		<if test="trueName != null">
+			and true_name like #{trueName}
+		</if>
+		<if test="birthday != null">
+			and birthday like #{birthday}
+		</if>
+		<if test="sex != null">
+			and sex like #{sex}
+		</if>
+		<if test="post != null">
+			and post like #{post}
+		</if>
+		<if test="isManagePost != null">
+			and is_manage_post like #{isManagePost}
+		</if>
+		<if test="departmentId != null">
+			and department_id like #{departmentId}
+		</if>
+		<if test="department != null">
+			and department like #{department}
+		</if>
+		<if test="email != null">
+			and email like #{email}
+		</if>
+		<if test="mobile != null">
+			and mobile like #{mobile}
+		</if>
+		<if test="address != null">
+			and address like #{address}
+		</if>
+		<if test="headPhoto != null">
+			and head_photo like #{headPhoto}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="entryTime1 != null and entryTime2 != null">
+			and entry_time between #{entryTime1} and #{entryTime2}
+		</if>
+		<if test="education != null">
+			and education like #{education}
+		</if>
+		<if test="idCard != null">
+			and id_card like #{idCard}
+		</if>
+		<if test="origin != null">
+			and origin like #{origin}
+		</if>
+		<if test="creatorUserId != null">
+			and creator_user_id like #{creatorUserId}
+		</if>
+		<if test="creatorUserName != null">
+			and creator_user_name like #{creatorUserName}
+		</if>
+		<if test="creatorEmployeeId != null">
+			and creator_employee_id like #{creatorEmployeeId}
+		</if>
+		<if test="creator != null">
+			and creator like #{creator}
+		</if>
+		<if test="createTime1 != null and createTime2 != null">
+			and create_time between #{createTime1} and #{createTime2}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userId'">user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'userName'">user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'trueName'">true_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'birthday'">birthday ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sex'">sex ${orderParam.direction}</if>
+			<if test="orderParam.name == 'post'">post ${orderParam.direction}</if>
+			<if test="orderParam.name == 'isManagePost'">is_manage_post ${orderParam.direction}</if>
+			<if test="orderParam.name == 'departmentId'">department_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'department'">department ${orderParam.direction}</if>
+			<if test="orderParam.name == 'email'">email ${orderParam.direction}</if>
+			<if test="orderParam.name == 'mobile'">mobile ${orderParam.direction}</if>
+			<if test="orderParam.name == 'address'">address ${orderParam.direction}</if>
+			<if test="orderParam.name == 'headPhoto'">head_photo ${orderParam.direction}</if>
+			<if test="orderParam.name == 'status'">status ${orderParam.direction}</if>
+			<if test="orderParam.name == 'entryTime'">entry_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'education'">education ${orderParam.direction}</if>
+			<if test="orderParam.name == 'idCard'">id_card ${orderParam.direction}</if>
+			<if test="orderParam.name == 'origin'">origin ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creatorUserId'">creator_user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creatorUserName'">creator_user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creatorEmployeeId'">creator_employee_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'creator'">creator ${orderParam.direction}</if>
+			<if test="orderParam.name == 'createTime'">create_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加部门表 -->
+	<insert id="saveDepartment" parameterType="department">
+		<![CDATA[
+		insert into department(
+		id , sponsor_id , sponsor_title_all , title , super_title , remark , 
+		is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{sponsorId,jdbcType=VARCHAR} , #{sponsorTitleAll,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{superTitle,jdbcType=VARCHAR} , #{remark,jdbcType=VARCHAR} , 
+		1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻部门表 -->
+	<select id="findDepartment" resultMap="departmentResultMap">
+		<![CDATA[
+		select * from department where id = #{departmentId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新部门表 -->
+	<update id="updateDepartment" parameterType="department">
+		<![CDATA[
+		update department set 
+		sponsor_id = #{sponsorId,jdbcType=VARCHAR} , sponsor_title_all = #{sponsorTitleAll,jdbcType=VARCHAR} , title = #{title,jdbcType=VARCHAR} , 
+		super_title = #{superTitle,jdbcType=VARCHAR} , remark = #{remark,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , 
+		invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新部门表 -->
+	<update id="updateDepartment2" parameterType="department">
+		update department
+		<set>
+		<if test="sponsorId != null">
+			sponsor_id = #{sponsorId},
+		</if>
+		<if test="sponsorTitleAll != null">
+			sponsor_title_all = #{sponsorTitleAll},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="superTitle != null">
+			super_title = #{superTitle},
+		</if>
+		<if test="remark != null">
+			remark = #{remark},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除部门表 -->
+	<delete id="deleteDepartment" parameterType="department">
+		<![CDATA[
+		delete from department where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询部门表 -->
+	<select id="queryDepartment" parameterType="java.util.Map" resultMap="departmentResultMap">
+		select * from department
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="sponsorId != null">
+			and sponsor_id like #{sponsorId}
+		</if>
+		<if test="sponsorTitleAll != null">
+			and sponsor_title_all like #{sponsorTitleAll}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sponsorId'">sponsor_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sponsorTitleAll'">sponsor_title_all ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'superTitle'">super_title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻部门表 -->
+	<select id="findDepartment2" parameterType="java.util.Map" resultMap="departmentResultMap">
+		select * from department
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="sponsorId != null">
+			and sponsor_id like #{sponsorId}
+		</if>
+		<if test="sponsorTitleAll != null">
+			and sponsor_title_all like #{sponsorTitleAll}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻部门表 -->
+	<select id="findDepartment3" parameterType="java.util.Map" resultMap="departmentResultMap">
+		select * from department
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'sponsorId'">
+			 sponsor_id like #{paramValue}
+		</if>
+		<if test="paramName == 'sponsorTitleAll'">
+			 sponsor_title_all like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'superTitle'">
+			 super_title like #{paramValue}
+		</if>
+		<if test="paramName == 'remark'">
+			 remark like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）部门表 -->
+	<select id="queryPaginationDepartmentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from department
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="sponsorId != null">
+			and sponsor_id like #{sponsorId}
+		</if>
+		<if test="sponsorTitleAll != null">
+			and sponsor_title_all like #{sponsorTitleAll}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）部门表 -->
+	<select id="queryPaginationDepartmentList" parameterType="java.util.Map" resultMap="departmentResultMap">
+		select *  from department
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="sponsorId != null">
+			and sponsor_id like #{sponsorId}
+		</if>
+		<if test="sponsorTitleAll != null">
+			and sponsor_title_all like #{sponsorTitleAll}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="superTitle != null">
+			and super_title like #{superTitle}
+		</if>
+		<if test="remark != null">
+			and remark like #{remark}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sponsorId'">sponsor_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'sponsorTitleAll'">sponsor_title_all ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'superTitle'">super_title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'remark'">remark ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加数据区域 -->
+	<insert id="saveDataArea" parameterType="dataArea">
+		<![CDATA[
+		insert into data_area(
+		id , area_code , area , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{areaCode,jdbcType=VARCHAR} , #{area,jdbcType=VARCHAR} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻数据区域 -->
+	<select id="findDataArea" resultMap="dataAreaResultMap">
+		<![CDATA[
+		select * from data_area where id = #{dataAreaId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新数据区域 -->
+	<update id="updateDataArea" parameterType="dataArea">
+		<![CDATA[
+		update data_area set 
+		area_code = #{areaCode,jdbcType=VARCHAR} , area = #{area,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , 
+		invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新数据区域 -->
+	<update id="updateDataArea2" parameterType="dataArea">
+		update data_area
+		<set>
+		<if test="areaCode != null">
+			area_code = #{areaCode},
+		</if>
+		<if test="area != null">
+			area = #{area},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除数据区域 -->
+	<delete id="deleteDataArea" parameterType="dataArea">
+		<![CDATA[
+		delete from data_area where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询数据区域 -->
+	<select id="queryDataArea" parameterType="java.util.Map" resultMap="dataAreaResultMap">
+		select * from data_area
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="areaCode != null">
+			and area_code like #{areaCode}
+		</if>
+		<if test="area != null">
+			and area like #{area}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'areaCode'">area_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'area'">area ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻数据区域 -->
+	<select id="findDataArea2" parameterType="java.util.Map" resultMap="dataAreaResultMap">
+		select * from data_area
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="areaCode != null">
+			and area_code like #{areaCode}
+		</if>
+		<if test="area != null">
+			and area like #{area}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻数据区域 -->
+	<select id="findDataArea3" parameterType="java.util.Map" resultMap="dataAreaResultMap">
+		select * from data_area
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'areaCode'">
+			 area_code like #{paramValue}
+		</if>
+		<if test="paramName == 'area'">
+			 area like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）数据区域 -->
+	<select id="queryPaginationDataAreaCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from data_area
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="areaCode != null">
+			and area_code like #{areaCode}
+		</if>
+		<if test="area != null">
+			and area like #{area}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）数据区域 -->
+	<select id="queryPaginationDataAreaList" parameterType="java.util.Map" resultMap="dataAreaResultMap">
+		select *  from data_area
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="areaCode != null">
+			and area_code like #{areaCode}
+		</if>
+		<if test="area != null">
+			and area like #{area}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'areaCode'">area_code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'area'">area ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加广告 -->
+	<insert id="saveAdvert" parameterType="advert">
+		<![CDATA[
+		insert into advert(
+		id , code , position , title , content_file , start_time , 
+		expire_time , status , preview_url , publisher_user_id , publisher_user_name , publisher_employee_id , 
+		publisher , publish_time , editor_user_id , editor_user_name , editor_employee_id , editor , 
+		edit_time , is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{code,jdbcType=VARCHAR} , #{position,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{contentFile,jdbcType=VARCHAR} , #{startTime,jdbcType=TIMESTAMP} , 
+		#{expireTime,jdbcType=TIMESTAMP} , #{status,jdbcType=VARCHAR} , #{previewUrl,jdbcType=VARCHAR} , #{publisherUserId,jdbcType=VARCHAR} , #{publisherUserName,jdbcType=VARCHAR} , #{publisherEmployeeId,jdbcType=VARCHAR} , 
+		#{publisher,jdbcType=VARCHAR} , #{publishTime,jdbcType=TIMESTAMP} , #{editorUserId,jdbcType=VARCHAR} , #{editorUserName,jdbcType=VARCHAR} , #{editorEmployeeId,jdbcType=VARCHAR} , #{editor,jdbcType=VARCHAR} , 
+		#{editTime,jdbcType=TIMESTAMP} , 1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻广告 -->
+	<select id="findAdvert" resultMap="advertResultMap">
+		<![CDATA[
+		select * from advert where id = #{advertId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新广告 -->
+	<update id="updateAdvert" parameterType="advert">
+		<![CDATA[
+		update advert set 
+		code = #{code,jdbcType=VARCHAR} , position = #{position,jdbcType=VARCHAR} , title = #{title,jdbcType=VARCHAR} , 
+		content_file = #{contentFile,jdbcType=VARCHAR} , start_time = #{startTime,jdbcType=TIMESTAMP} , expire_time = #{expireTime,jdbcType=TIMESTAMP} , 
+		status = #{status,jdbcType=VARCHAR} , preview_url = #{previewUrl,jdbcType=VARCHAR} , publisher_user_id = #{publisherUserId,jdbcType=VARCHAR} , 
+		publisher_user_name = #{publisherUserName,jdbcType=VARCHAR} , publisher_employee_id = #{publisherEmployeeId,jdbcType=VARCHAR} , publisher = #{publisher,jdbcType=VARCHAR} , 
+		publish_time = #{publishTime,jdbcType=TIMESTAMP} , editor_user_id = #{editorUserId,jdbcType=VARCHAR} , editor_user_name = #{editorUserName,jdbcType=VARCHAR} , 
+		editor_employee_id = #{editorEmployeeId,jdbcType=VARCHAR} , editor = #{editor,jdbcType=VARCHAR} , edit_time = #{editTime,jdbcType=TIMESTAMP} , 
+		is_valid = #{isValid,jdbcType=INTEGER} , invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新广告 -->
+	<update id="updateAdvert2" parameterType="advert">
+		update advert
+		<set>
+		<if test="code != null">
+			code = #{code},
+		</if>
+		<if test="position != null">
+			position = #{position},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="contentFile != null">
+			content_file = #{contentFile},
+		</if>
+		<if test="startTime != null">
+			start_time = #{startTime},
+		</if>
+		<if test="expireTime != null">
+			expire_time = #{expireTime},
+		</if>
+		<if test="status != null">
+			status = #{status},
+		</if>
+		<if test="previewUrl != null">
+			preview_url = #{previewUrl},
+		</if>
+		<if test="publisherUserId != null">
+			publisher_user_id = #{publisherUserId},
+		</if>
+		<if test="publisherUserName != null">
+			publisher_user_name = #{publisherUserName},
+		</if>
+		<if test="publisherEmployeeId != null">
+			publisher_employee_id = #{publisherEmployeeId},
+		</if>
+		<if test="publisher != null">
+			publisher = #{publisher},
+		</if>
+		<if test="publishTime != null">
+			publish_time = #{publishTime},
+		</if>
+		<if test="editorUserId != null">
+			editor_user_id = #{editorUserId},
+		</if>
+		<if test="editorUserName != null">
+			editor_user_name = #{editorUserName},
+		</if>
+		<if test="editorEmployeeId != null">
+			editor_employee_id = #{editorEmployeeId},
+		</if>
+		<if test="editor != null">
+			editor = #{editor},
+		</if>
+		<if test="editTime != null">
+			edit_time = #{editTime},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除广告 -->
+	<delete id="deleteAdvert" parameterType="advert">
+		<![CDATA[
+		delete from advert where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询广告 -->
+	<select id="queryAdvert" parameterType="java.util.Map" resultMap="advertResultMap">
+		select * from advert
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="position != null">
+			and position like #{position}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="startTime1 != null and startTime2 != null">
+			and start_time between #{startTime1} and #{startTime2}
+		</if>
+		<if test="expireTime1 != null and expireTime2 != null">
+			and expire_time between #{expireTime1} and #{expireTime2}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="previewUrl != null">
+			and preview_url like #{previewUrl}
+		</if>
+		<if test="publisherUserId != null">
+			and publisher_user_id like #{publisherUserId}
+		</if>
+		<if test="publisherUserName != null">
+			and publisher_user_name like #{publisherUserName}
+		</if>
+		<if test="publisherEmployeeId != null">
+			and publisher_employee_id like #{publisherEmployeeId}
+		</if>
+		<if test="publisher != null">
+			and publisher like #{publisher}
+		</if>
+		<if test="publishTime1 != null and publishTime2 != null">
+			and publish_time between #{publishTime1} and #{publishTime2}
+		</if>
+		<if test="editorUserId != null">
+			and editor_user_id like #{editorUserId}
+		</if>
+		<if test="editorUserName != null">
+			and editor_user_name like #{editorUserName}
+		</if>
+		<if test="editorEmployeeId != null">
+			and editor_employee_id like #{editorEmployeeId}
+		</if>
+		<if test="editor != null">
+			and editor like #{editor}
+		</if>
+		<if test="editTime1 != null and editTime2 != null">
+			and edit_time between #{editTime1} and #{editTime2}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'position'">position ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'contentFile'">content_file ${orderParam.direction}</if>
+			<if test="orderParam.name == 'startTime'">start_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'expireTime'">expire_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'status'">status ${orderParam.direction}</if>
+			<if test="orderParam.name == 'previewUrl'">preview_url ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisherUserId'">publisher_user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisherUserName'">publisher_user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisherEmployeeId'">publisher_employee_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisher'">publisher ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publishTime'">publish_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editorUserId'">editor_user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editorUserName'">editor_user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editorEmployeeId'">editor_employee_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editor'">editor ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editTime'">edit_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻广告 -->
+	<select id="findAdvert2" parameterType="java.util.Map" resultMap="advertResultMap">
+		select * from advert
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="position != null">
+			and position like #{position}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="startTime1 != null and startTime2 != null">
+			and start_time between #{startTime1} and #{startTime2}
+		</if>
+		<if test="expireTime1 != null and expireTime2 != null">
+			and expire_time between #{expireTime1} and #{expireTime2}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="previewUrl != null">
+			and preview_url like #{previewUrl}
+		</if>
+		<if test="publisherUserId != null">
+			and publisher_user_id like #{publisherUserId}
+		</if>
+		<if test="publisherUserName != null">
+			and publisher_user_name like #{publisherUserName}
+		</if>
+		<if test="publisherEmployeeId != null">
+			and publisher_employee_id like #{publisherEmployeeId}
+		</if>
+		<if test="publisher != null">
+			and publisher like #{publisher}
+		</if>
+		<if test="publishTime1 != null and publishTime2 != null">
+			and publish_time between #{publishTime1} and #{publishTime2}
+		</if>
+		<if test="editorUserId != null">
+			and editor_user_id like #{editorUserId}
+		</if>
+		<if test="editorUserName != null">
+			and editor_user_name like #{editorUserName}
+		</if>
+		<if test="editorEmployeeId != null">
+			and editor_employee_id like #{editorEmployeeId}
+		</if>
+		<if test="editor != null">
+			and editor like #{editor}
+		</if>
+		<if test="editTime1 != null and editTime2 != null">
+			and edit_time between #{editTime1} and #{editTime2}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻广告 -->
+	<select id="findAdvert3" parameterType="java.util.Map" resultMap="advertResultMap">
+		select * from advert
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'code'">
+			 code like #{paramValue}
+		</if>
+		<if test="paramName == 'position'">
+			 position like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'contentFile'">
+			 content_file like #{paramValue}
+		</if>
+		<if test="paramName == 'startTime'">
+			 start_time = #{paramValue}
+		</if>
+		<if test="paramName == 'expireTime'">
+			 expire_time = #{paramValue}
+		</if>
+		<if test="paramName == 'status'">
+			 status like #{paramValue}
+		</if>
+		<if test="paramName == 'previewUrl'">
+			 preview_url like #{paramValue}
+		</if>
+		<if test="paramName == 'publisherUserId'">
+			 publisher_user_id like #{paramValue}
+		</if>
+		<if test="paramName == 'publisherUserName'">
+			 publisher_user_name like #{paramValue}
+		</if>
+		<if test="paramName == 'publisherEmployeeId'">
+			 publisher_employee_id like #{paramValue}
+		</if>
+		<if test="paramName == 'publisher'">
+			 publisher like #{paramValue}
+		</if>
+		<if test="paramName == 'publishTime'">
+			 publish_time = #{paramValue}
+		</if>
+		<if test="paramName == 'editorUserId'">
+			 editor_user_id like #{paramValue}
+		</if>
+		<if test="paramName == 'editorUserName'">
+			 editor_user_name like #{paramValue}
+		</if>
+		<if test="paramName == 'editorEmployeeId'">
+			 editor_employee_id like #{paramValue}
+		</if>
+		<if test="paramName == 'editor'">
+			 editor like #{paramValue}
+		</if>
+		<if test="paramName == 'editTime'">
+			 edit_time = #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）广告 -->
+	<select id="queryPaginationAdvertCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from advert
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="position != null">
+			and position like #{position}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="startTime1 != null and startTime2 != null">
+			and start_time between #{startTime1} and #{startTime2}
+		</if>
+		<if test="expireTime1 != null and expireTime2 != null">
+			and expire_time between #{expireTime1} and #{expireTime2}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="previewUrl != null">
+			and preview_url like #{previewUrl}
+		</if>
+		<if test="publisherUserId != null">
+			and publisher_user_id like #{publisherUserId}
+		</if>
+		<if test="publisherUserName != null">
+			and publisher_user_name like #{publisherUserName}
+		</if>
+		<if test="publisherEmployeeId != null">
+			and publisher_employee_id like #{publisherEmployeeId}
+		</if>
+		<if test="publisher != null">
+			and publisher like #{publisher}
+		</if>
+		<if test="publishTime1 != null and publishTime2 != null">
+			and publish_time between #{publishTime1} and #{publishTime2}
+		</if>
+		<if test="editorUserId != null">
+			and editor_user_id like #{editorUserId}
+		</if>
+		<if test="editorUserName != null">
+			and editor_user_name like #{editorUserName}
+		</if>
+		<if test="editorEmployeeId != null">
+			and editor_employee_id like #{editorEmployeeId}
+		</if>
+		<if test="editor != null">
+			and editor like #{editor}
+		</if>
+		<if test="editTime1 != null and editTime2 != null">
+			and edit_time between #{editTime1} and #{editTime2}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）广告 -->
+	<select id="queryPaginationAdvertList" parameterType="java.util.Map" resultMap="advertResultMap">
+		select *  from advert
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="position != null">
+			and position like #{position}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="startTime1 != null and startTime2 != null">
+			and start_time between #{startTime1} and #{startTime2}
+		</if>
+		<if test="expireTime1 != null and expireTime2 != null">
+			and expire_time between #{expireTime1} and #{expireTime2}
+		</if>
+		<if test="status != null">
+			and status like #{status}
+		</if>
+		<if test="previewUrl != null">
+			and preview_url like #{previewUrl}
+		</if>
+		<if test="publisherUserId != null">
+			and publisher_user_id like #{publisherUserId}
+		</if>
+		<if test="publisherUserName != null">
+			and publisher_user_name like #{publisherUserName}
+		</if>
+		<if test="publisherEmployeeId != null">
+			and publisher_employee_id like #{publisherEmployeeId}
+		</if>
+		<if test="publisher != null">
+			and publisher like #{publisher}
+		</if>
+		<if test="publishTime1 != null and publishTime2 != null">
+			and publish_time between #{publishTime1} and #{publishTime2}
+		</if>
+		<if test="editorUserId != null">
+			and editor_user_id like #{editorUserId}
+		</if>
+		<if test="editorUserName != null">
+			and editor_user_name like #{editorUserName}
+		</if>
+		<if test="editorEmployeeId != null">
+			and editor_employee_id like #{editorEmployeeId}
+		</if>
+		<if test="editor != null">
+			and editor like #{editor}
+		</if>
+		<if test="editTime1 != null and editTime2 != null">
+			and edit_time between #{editTime1} and #{editTime2}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'position'">position ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'contentFile'">content_file ${orderParam.direction}</if>
+			<if test="orderParam.name == 'startTime'">start_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'expireTime'">expire_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'status'">status ${orderParam.direction}</if>
+			<if test="orderParam.name == 'previewUrl'">preview_url ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisherUserId'">publisher_user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisherUserName'">publisher_user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisherEmployeeId'">publisher_employee_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publisher'">publisher ${orderParam.direction}</if>
+			<if test="orderParam.name == 'publishTime'">publish_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editorUserId'">editor_user_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editorUserName'">editor_user_name ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editorEmployeeId'">editor_employee_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editor'">editor ${orderParam.direction}</if>
+			<if test="orderParam.name == 'editTime'">edit_time ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- 添加广告附件表 -->
+	<insert id="saveAdvertAttachment" parameterType="advertAttachment">
+		<![CDATA[
+		insert into advert_attachment(
+		id , advert_id , code , title , content_type , content_file , 
+		is_valid , invalid_date
+		) values (
+		#{id,jdbcType=VARCHAR} , #{advertId,jdbcType=VARCHAR} , #{code,jdbcType=VARCHAR} , #{title,jdbcType=VARCHAR} , #{contentType,jdbcType=VARCHAR} , #{contentFile,jdbcType=VARCHAR} , 
+		1 , #{invalidDate,jdbcType=TIMESTAMP})
+		]]>
+	</insert>
+
+	<!-- 找寻广告附件表 -->
+	<select id="findAdvertAttachment" resultMap="advertAttachmentResultMap">
+		<![CDATA[
+		select * from advert_attachment where id = #{advertAttachmentId} and is_valid = 1
+		]]>
+	</select>
+
+	<!-- 更新广告附件表 -->
+	<update id="updateAdvertAttachment" parameterType="advertAttachment">
+		<![CDATA[
+		update advert_attachment set 
+		advert_id = #{advertId,jdbcType=VARCHAR} , code = #{code,jdbcType=VARCHAR} , title = #{title,jdbcType=VARCHAR} , 
+		content_type = #{contentType,jdbcType=VARCHAR} , content_file = #{contentFile,jdbcType=VARCHAR} , is_valid = #{isValid,jdbcType=INTEGER} , 
+		invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+		where id = #{id} and is_valid = 1
+		]]>
+	</update>
+
+	<!-- 动态更新广告附件表 -->
+	<update id="updateAdvertAttachment2" parameterType="advertAttachment">
+		update advert_attachment
+		<set>
+		<if test="advertId != null">
+			advert_id = #{advertId},
+		</if>
+		<if test="code != null">
+			code = #{code},
+		</if>
+		<if test="title != null">
+			title = #{title},
+		</if>
+		<if test="contentType != null">
+			content_type = #{contentType},
+		</if>
+		<if test="contentFile != null">
+			content_file = #{contentFile},
+		</if>
+		<if test="isValid != null">
+			is_valid = #{isValid},
+		</if>
+		<if test="invalidDate != null">
+			invalid_date = #{invalidDate},
+		</if>
+		</set>
+		where id = #{id} and is_valid = 1
+	</update>
+
+	<!-- 删除广告附件表 -->
+	<delete id="deleteAdvertAttachment" parameterType="advertAttachment">
+		<![CDATA[
+		delete from advert_attachment where id = #{id}
+		]]>
+	</delete>
+
+	<!-- 查询广告附件表 -->
+	<select id="queryAdvertAttachment" parameterType="java.util.Map" resultMap="advertAttachmentResultMap">
+		select * from advert_attachment
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="advertId != null">
+			and advert_id like #{advertId}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentType != null">
+			and content_type like #{contentType}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'advertId'">advert_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'contentType'">content_type ${orderParam.direction}</if>
+			<if test="orderParam.name == 'contentFile'">content_file ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+	</select>
+
+	<!-- 找寻广告附件表 -->
+	<select id="findAdvertAttachment2" parameterType="java.util.Map" resultMap="advertAttachmentResultMap">
+		select * from advert_attachment
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="advertId != null">
+			and advert_id like #{advertId}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentType != null">
+			and content_type like #{contentType}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 找寻广告附件表 -->
+	<select id="findAdvertAttachment3" parameterType="java.util.Map" resultMap="advertAttachmentResultMap">
+		select * from advert_attachment
+		<where>
+		<if test="paramName == 'id'">
+			 id like #{paramValue}
+		</if>
+		<if test="paramName == 'advertId'">
+			 advert_id like #{paramValue}
+		</if>
+		<if test="paramName == 'code'">
+			 code like #{paramValue}
+		</if>
+		<if test="paramName == 'title'">
+			 title like #{paramValue}
+		</if>
+		<if test="paramName == 'contentType'">
+			 content_type like #{paramValue}
+		</if>
+		<if test="paramName == 'contentFile'">
+			 content_file like #{paramValue}
+		</if>
+		<if test="paramName == 'isValid'">
+			 is_valid = #{paramValue}
+		</if>
+		<if test="paramName == 'invalidDate'">
+			 invalid_date = #{paramValue}
+		</if>
+		and is_valid = 1
+		</where>
+	</select>
+
+	<!-- 分页查询（统计）广告附件表 -->
+	<select id="queryPaginationAdvertAttachmentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from advert_attachment
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="advertId != null">
+			and advert_id like #{advertId}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentType != null">
+			and content_type like #{contentType}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+	</select>
+
+	<!-- 分页查询（当前页的列表）广告附件表 -->
+	<select id="queryPaginationAdvertAttachmentList" parameterType="java.util.Map" resultMap="advertAttachmentResultMap">
+		select *  from advert_attachment
+		<where>
+		is_valid = 1
+		<if test="id != null">
+			and id like #{id}
+		</if>
+		<if test="advertId != null">
+			and advert_id like #{advertId}
+		</if>
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="title != null">
+			and title like #{title}
+		</if>
+		<if test="contentType != null">
+			and content_type like #{contentType}
+		</if>
+		<if test="contentFile != null">
+			and content_file like #{contentFile}
+		</if>
+		<if test="invalidDate1 != null and invalidDate2 != null">
+			and invalid_date between #{invalidDate1} and #{invalidDate2}
+		</if>
+		</where>
+		<if test="orderParams == null">order by id desc</if>
+		<if test="orderParams != null">
+		<foreach collection="orderParams" item="orderParam" open="order by " separator=",">
+			<if test="orderParam.name == 'id'">id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'advertId'">advert_id ${orderParam.direction}</if>
+			<if test="orderParam.name == 'code'">code ${orderParam.direction}</if>
+			<if test="orderParam.name == 'title'">title ${orderParam.direction}</if>
+			<if test="orderParam.name == 'contentType'">content_type ${orderParam.direction}</if>
+			<if test="orderParam.name == 'contentFile'">content_file ${orderParam.direction}</if>
+			<if test="orderParam.name == 'invalidDate'">invalid_date ${orderParam.direction}</if>
+		</foreach>
+		</if>
+		limit #{beginIndex} , #{pageSize}
+	</select>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysUser 帐号表 -->
+	<resultMap id="sysUserResultMap" type="sysUser">
+		<id property="id" column="id" />
+		<result property="userName" column="user_name" jdbcType="VARCHAR" />
+		<result property="userName1234" column="user_name_1234" jdbcType="VARCHAR" />
+		<result property="password" column="password" jdbcType="VARCHAR" />
+		<result property="dongles" column="dongles" jdbcType="VARCHAR" />
+		<result property="trueName" column="true_name" jdbcType="VARCHAR" />
+		<result property="email" column="email" jdbcType="VARCHAR" />
+		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
+		<result property="enable" column="enable" jdbcType="VARCHAR" />
+		<result property="userType" column="user_type" jdbcType="VARCHAR" />
+		<result property="lastSetPasswordTime" column="last_set_password_time" jdbcType="TIMESTAMP" />
+		<result property="priorLoginTime" column="prior_login_time" jdbcType="TIMESTAMP" />
+		<result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP" />
+		<result property="totalLogin" column="total_login" jdbcType="INTEGER" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysUserUserGroup 用户和用户组之间关系表 -->
+	<resultMap id="sysUserUserGroupResultMap" type="sysUserUserGroup">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" jdbcType="VARCHAR" />
+		<result property="userGroupId" column="user_group_id" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysUserGroup 用户组表 -->
+	<resultMap id="sysUserGroupResultMap" type="sysUserGroup">
+		<id property="id" column="id" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="corporationId" column="corporation_id" jdbcType="VARCHAR" />
+		<result property="corporation" column="corporation" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysUserGroupRole 用户组和角色之间的关系表 -->
+	<resultMap id="sysUserGroupRoleResultMap" type="sysUserGroupRole">
+		<id property="id" column="id" />
+		<result property="userGroupId" column="user_group_id" jdbcType="VARCHAR" />
+		<result property="roleId" column="role_id" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysRole 角色表 -->
+	<resultMap id="sysRoleResultMap" type="sysRole">
+		<id property="id" column="id" />
+		<result property="signCode" column="sign_code" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysRoleAuthority 角色和权限之间的关系表 -->
+	<resultMap id="sysRoleAuthorityResultMap" type="sysRoleAuthority">
+		<id property="id" column="id" />
+		<result property="roleId" column="role_id" jdbcType="VARCHAR" />
+		<result property="authorityId" column="authority_id" jdbcType="VARCHAR" />
+		<result property="authorityCode" column="authority_code" jdbcType="VARCHAR" />
+		<result property="authorityGroupId" column="authority_group_id" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysAuthorityGroup 系统权限组表 -->
+	<resultMap id="sysAuthorityGroupResultMap" type="sysAuthorityGroup">
+		<id property="id" column="id" />
+		<result property="supperId" column="supper_id" jdbcType="VARCHAR" />
+		<result property="supperTitle" column="supper_title" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysAuthority 系统权限表 -->
+	<resultMap id="sysAuthorityResultMap" type="sysAuthority">
+		<id property="id" column="id" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="authorityGroupId" column="authority_group_id" jdbcType="VARCHAR" />
+		<result property="authorityGroup" column="authority_group" jdbcType="VARCHAR" />
+		<result property="entryUrl" column="entry_url" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.SysMenuOption 菜单项 -->
+	<resultMap id="sysMenuOptionResultMap" type="sysMenuOption">
+		<id property="id" column="id" />
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="innerCode" column="inner_code" jdbcType="VARCHAR" />
+		<result property="icon" column="icon" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="superId" column="super_id" jdbcType="VARCHAR" />
+		<result property="superTitle" column="super_title" jdbcType="VARCHAR" />
+		<result property="depth" column="depth" jdbcType="INTEGER" />
+		<result property="url" column="url" jdbcType="VARCHAR" />
+		<result property="isBandAuthority" column="is_band_authority" jdbcType="VARCHAR" />
+		<result property="authorityId" column="authority_id" jdbcType="VARCHAR" />
+		<result property="authorityCode" column="authority_code" jdbcType="VARCHAR" />
+		<result property="authority" column="authority" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.ConstantDataDict 常量数据字典 -->
+	<resultMap id="constantDataDictResultMap" type="constantDataDict">
+		<id property="id" column="id" />
+		<result property="item" column="item" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="value" column="value" jdbcType="VARCHAR" />
+		<result property="extendValue" column="extend_value" jdbcType="VARCHAR" />
+		<result property="orderIndex" column="order_index" jdbcType="INTEGER" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.AddressRegion 地址区域 -->
+	<resultMap id="addressRegionResultMap" type="addressRegion">
+		<id property="id" column="id" />
+		<result property="parentRegion" column="parent_region" jdbcType="VARCHAR" />
+		<result property="regionName" column="region_name" jdbcType="VARCHAR" />
+		<result property="postCode" column="post_code" jdbcType="VARCHAR" />
+		<result property="level" column="level" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.VerifyCode 验证码表 -->
+	<resultMap id="verifyCodeResultMap" type="verifyCode">
+		<id property="id" column="id" />
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="sort" column="sort" jdbcType="VARCHAR" />
+		<result property="email" column="email" jdbcType="VARCHAR" />
+		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
+		<result property="clientId" column="client_id" jdbcType="VARCHAR" />
+		<result property="sessionId" column="session_id" jdbcType="VARCHAR" />
+		<result property="userId" column="user_id" jdbcType="VARCHAR" />
+		<result property="trueName" column="true_name" jdbcType="VARCHAR" />
+		<result property="actionPlace" column="action_place" jdbcType="VARCHAR" />
+		<result property="beginTime" column="begin_time" jdbcType="TIMESTAMP" />
+		<result property="endTime" column="end_time" jdbcType="TIMESTAMP" />
+		<result property="validateLength" column="validate_length" jdbcType="INTEGER" />
+		<result property="isVerify" column="is_verify" jdbcType="VARCHAR" />
+		<result property="verifyTime" column="verify_time" jdbcType="TIMESTAMP" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.Employee 员工表 -->
+	<resultMap id="employeeResultMap" type="employee">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" jdbcType="VARCHAR" />
+		<result property="userName" column="user_name" jdbcType="VARCHAR" />
+		<result property="trueName" column="true_name" jdbcType="VARCHAR" />
+		<result property="birthday" column="birthday" jdbcType="VARCHAR" />
+		<result property="sex" column="sex" jdbcType="VARCHAR" />
+		<result property="post" column="post" jdbcType="VARCHAR" />
+		<result property="isManagePost" column="is_manage_post" jdbcType="VARCHAR" />
+		<result property="departmentId" column="department_id" jdbcType="VARCHAR" />
+		<result property="department" column="department" jdbcType="VARCHAR" />
+		<result property="email" column="email" jdbcType="VARCHAR" />
+		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
+		<result property="address" column="address" jdbcType="VARCHAR" />
+		<result property="headPhoto" column="head_photo" jdbcType="VARCHAR" />
+		<result property="status" column="status" jdbcType="VARCHAR" />
+		<result property="entryTime" column="entry_time" jdbcType="TIMESTAMP" />
+		<result property="education" column="education" jdbcType="VARCHAR" />
+		<result property="idCard" column="id_card" jdbcType="VARCHAR" />
+		<result property="origin" column="origin" jdbcType="VARCHAR" />
+		<result property="creatorUserId" column="creator_user_id" jdbcType="VARCHAR" />
+		<result property="creatorUserName" column="creator_user_name" jdbcType="VARCHAR" />
+		<result property="creatorEmployeeId" column="creator_employee_id" jdbcType="VARCHAR" />
+		<result property="creator" column="creator" jdbcType="VARCHAR" />
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.Department 部门表 -->
+	<resultMap id="departmentResultMap" type="department">
+		<id property="id" column="id" />
+		<result property="sponsorId" column="sponsor_id" jdbcType="VARCHAR" />
+		<result property="sponsorTitleAll" column="sponsor_title_all" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="superTitle" column="super_title" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.DataArea 数据区域 -->
+	<resultMap id="dataAreaResultMap" type="dataArea">
+		<id property="id" column="id" />
+		<result property="areaCode" column="area_code" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.Advert 广告 -->
+	<resultMap id="advertResultMap" type="advert">
+		<id property="id" column="id" />
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="position" column="position" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="contentFile" column="content_file" jdbcType="VARCHAR" />
+		<result property="startTime" column="start_time" jdbcType="TIMESTAMP" />
+		<result property="expireTime" column="expire_time" jdbcType="TIMESTAMP" />
+		<result property="status" column="status" jdbcType="VARCHAR" />
+		<result property="previewUrl" column="preview_url" jdbcType="VARCHAR" />
+		<result property="publisherUserId" column="publisher_user_id" jdbcType="VARCHAR" />
+		<result property="publisherUserName" column="publisher_user_name" jdbcType="VARCHAR" />
+		<result property="publisherEmployeeId" column="publisher_employee_id" jdbcType="VARCHAR" />
+		<result property="publisher" column="publisher" jdbcType="VARCHAR" />
+		<result property="publishTime" column="publish_time" jdbcType="TIMESTAMP" />
+		<result property="editorUserId" column="editor_user_id" jdbcType="VARCHAR" />
+		<result property="editorUserName" column="editor_user_name" jdbcType="VARCHAR" />
+		<result property="editorEmployeeId" column="editor_employee_id" jdbcType="VARCHAR" />
+		<result property="editor" column="editor" jdbcType="VARCHAR" />
+		<result property="editTime" column="edit_time" jdbcType="TIMESTAMP" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- resultMap:top.moshco.mysuit.commons.entity.AdvertAttachment 广告附件表 -->
+	<resultMap id="advertAttachmentResultMap" type="advertAttachment">
+		<id property="id" column="id" />
+		<result property="advertId" column="advert_id" jdbcType="VARCHAR" />
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="contentType" column="content_type" jdbcType="VARCHAR" />
+		<result property="contentFile" column="content_file" jdbcType="VARCHAR" />
+		<result property="isValid" column="is_valid" jdbcType="INTEGER" />
+		<result property="invalidDate" column="invalid_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+</mapper>

@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>top.moshco.mysuit</groupId>
+		<artifactId>mysuit-pom</artifactId>
+		<version>v1.0</version>
+	</parent>
+	<groupId>top.moshco.mysuit.registry-center</groupId>
+	<artifactId>mysuit-registry-center</artifactId>
+	<packaging>jar</packaging>
+	<name>MySuit-registry-center</name>
+	<description>我的套件 注册中心</description>
+	
+	<dependencies>
+
+		<!-- 注册中心的库 -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+	</dependencies>
+	
+	<build>
+
+		<!-- 名称 -->
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+
+			<!-- springboot的插件 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+					<mainClass>cn.farinfo.sdodct.RegistryCenterApplication</mainClass>
+					<layout>jar</layout>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+	
+	<profiles>
+
+		<profile>
+		
+			<id>deploy1</id>
+
+			<build>
+
+				<!-- 名称 -->
+				<finalName>${project.artifactId}</finalName>
+
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+					<resource>
+						<directory>src/main/java</directory>
+						<includes>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+						<includes>
+							<include>**/**</include>
+						</includes>
+					</resource>
+					<resource>
+						<directory>src/main/webapp</directory>
+						<targetPath>META-INF/resources</targetPath>
+						<includes>
+							<include>**/**</include>
+						</includes>
+					</resource>
+				</resources>
+
+				<testResources>
+					<testResource>
+						<directory>src/test/resources</directory>
+						<filtering>true</filtering>
+					</testResource>
+				</testResources>
+
+				<plugins>
+
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<version>1.4.2.RELEASE</version>
+						<!-- 2.1.4.RELEASE 1.4.2.RELEASE -->
+						<configuration>
+							<fork>true</fork>
+							<mainClass>cn.farinfo.sdodct.RegistryCenterApplication</mainClass>
+							<layout>jar</layout>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<configuration>
+							<encoding>utf-8</encoding>
+							<useDefaultDelimiters>true</useDefaultDelimiters>
+						</configuration>
+					</plugin>
+
+				</plugins>
+
+			</build>
+
+		</profile>
+
+	</profiles>
+	
+</project>

@@ -1,0 +1,22 @@
+
+spring: 
+   application: 
+      name: mysuit-business
+
+server: 
+   port: 8020
+   servlet:
+      context-path: /mysuit-business
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+
+
+# 项目配置
+sdodct: 
+   appTitle: 我的套件 业务
+   
+   
+   

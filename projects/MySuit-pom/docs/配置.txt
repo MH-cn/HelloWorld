@@ -1,0 +1,8 @@
+
+
+--spring.profiles.active=p8010
+--spring.profiles.active=p8011
+
+
+
+
